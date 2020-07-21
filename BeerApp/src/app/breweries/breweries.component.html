@@ -2,20 +2,23 @@
   <h1>Find a brewery</h1>
   <h3>Select a country from the list</h3>
   <div class="select">
+
     <select
       aria-label="country-code"
       name="selectedCode"
-      value={this.state.select.selectedCode.toString()}
+      [(ngModel)]="selectedCode"
+      value="All countries"
       onChange={this.handleInputChange}
     >
-      <option value="">All countries</option>
-      <ng-container *ngFor = "let item of codes">
-        <option value="{item}"> {{item}}</option>
-      </ng-container>
-
+      <option value="All countries">All countries</option>
+      <option *ngFor="let item of codes" [ngValue]='item'>
+        {{item}}</option>
     </select>
   </div>
-  <ng-container *ngFor="let name of unique">
+  <ng-container>
+    <h2>Breweries from {{selectedCode.toString()}}</h2>
+  </ng-container>
+  <ng-container *ngFor="let name of uniqueNames">
     <div>
       <h4>{{name}}</h4>
     </div>

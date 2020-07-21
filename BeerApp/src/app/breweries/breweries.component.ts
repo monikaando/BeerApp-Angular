@@ -8,8 +8,9 @@ import {HttpClient} from "@angular/common/http";
 })
 export class BreweriesComponent implements OnInit {
   data: any = [];
-  unique: any = [];
+  uniqueNames: any = [];
   codes: any = [];
+  selectedCode='All countries'
 
   constructor(private http: HttpClient) {
     this.ngAfterViewInit()
@@ -32,7 +33,7 @@ export class BreweriesComponent implements OnInit {
   }
   uniqueCountryNames(r) {
     const breweryNamesArray = r.data.map(item => item.brewery.name);
-    this.unique = [...new Set(breweryNamesArray)]
+    this.uniqueNames = [...new Set(breweryNamesArray)]
   }
   ngOnInit() {
     this.getBreweriesData()
