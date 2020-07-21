@@ -9,8 +9,10 @@ import {HttpClient} from "@angular/common/http";
 export class BreweriesComponent implements OnInit {
   data: any = [];
   unique: any = [];
+  codes: any = [];
 
   constructor(private http: HttpClient) {
+    this.ngAfterViewInit()
   }
 
   getBreweries() {
@@ -19,18 +21,26 @@ export class BreweriesComponent implements OnInit {
 
   async getBreweriesData() {
     await this.getBreweries().toPromise()
-      .then(data => {
-        this.data = data
+      .then(result => {
+        this.data = result
       })
     return await this.getBreweries().toPromise();
   }
-
-  removeDuplicates(r) {
+  countryCodes(r){
+    const codesArray = r.data.map(item => item.countryIsoCode);
+    this.codes = [...new Set(codesArray)]
+  }
+  uniqueCountryNames(r) {
     const breweryNamesArray = r.data.map(item => item.brewery.name);
     this.unique = [...new Set(breweryNamesArray)]
   }
-
   ngOnInit() {
-    this.getBreweriesData().then(r => this.removeDuplicates(r));
+    this.getBreweriesData()
+      .then(r => this.countryCodes(r))
+  }
+  ngAfterViewInit(){
+    this.getBreweriesData()
+      .then(r => this.uniqueCountryNames(r))
   }
 }
+// r=this.data - >result of getBreweriesData()

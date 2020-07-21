@@ -1,9 +1,24 @@
 <div class="brewery-list-page">
   <h1>Find a brewery</h1>
   <h3>Select a country from the list</h3>
-  <ng-container *ngFor="let brew of unique">
+  <div class="select">
+    <select
+      aria-label="country-code"
+      name="selectedCode"
+      value={this.state.select.selectedCode.toString()}
+      onChange={this.handleInputChange}
+    >
+      <option value="">All countries</option>
+      <ng-container *ngFor = "let item of codes">
+        <option value="{item}"> {{item}}</option>
+      </ng-container>
+
+    </select>
+  </div>
+  <ng-container *ngFor="let name of unique">
     <div>
-      <h4>{{brew}}</h4>
+      <h4>{{name}}</h4>
     </div>
   </ng-container>
 </div>
+<!--switch: case of usa, be, ie-->
