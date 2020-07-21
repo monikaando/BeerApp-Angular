@@ -1,9 +1,9 @@
 <div class="brewery-list-page">
   <h1>Find a brewery</h1>
   <h3>Select a country from the list</h3>
-  <ng-container *ngFor="let brew of data.data">
+  <ng-container *ngFor="let brew of unique">
     <div>
-      <h4>{{brew.brewery.name}}</h4>
+      <h4>{{brew}}</h4>
     </div>
   </ng-container>
 </div>
