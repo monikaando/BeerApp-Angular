@@ -9,15 +9,15 @@
 
   <div class="brew-img-details">
     <div class="brew-img" *ngIf="breweryDetails.data.images; else noImage">
-          <div>
-              <a href="{{breweryDetails.data.website}}" rel="noopener noreferrer" target="_blank">
-                  <img src="{{breweryDetails.data.images.squareMedium}}" alt="brewery-logo" />
-              </a>
-          </div>
+      <div>
+        <a href="{{breweryDetails.data.website}}" rel="noopener noreferrer" target="_blank">
+          <img src="{{breweryDetails.data.images.squareMedium}}" alt="brewery-logo"/>
+        </a>
+      </div>
     </div>
-      <ng-template #noImage>
-        <p></p>
-      </ng-template>
+    <ng-template #noImage>
+      <p></p>
+    </ng-template>
 
     <a href="{{breweryDetails.data.website}}" rel="noopener noreferrer" target="_blank">
       <h4>{{breweryDetails.data.website}}</h4>
@@ -26,6 +26,10 @@
       <p>{{breweryDetails.data.description}}</p>
     </div>
   </div>
+  <ng-container class="beers-box" *ngFor="let beer of beersList.data">
+    <h5>{{beer.name}}</h5>
+  </ng-container>
+
 </div>
 <ng-template #loading>
   <p>Loading...</p>

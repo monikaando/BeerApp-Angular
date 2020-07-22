@@ -10,6 +10,7 @@ import {HttpClient} from "@angular/common/http";
 export class BreweriesDetailsComponent implements OnInit {
   breweryId: any = [];
   breweryDetails: any = [];
+  beersList: any = [];
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -21,21 +22,36 @@ export class BreweriesDetailsComponent implements OnInit {
   getBreweryById() {
     return this.http.get(`api/brewery/${this.breweryId}/?key=659d5c6b8f3d2447f090119e48202fdb`)
   }
-  initialisation(r) {
-console.log('initialization',(r))
+
+  getBeersByBrewery() {
+    return this.http.get(`api/brewery/${this.breweryId}/beers/?key=659d5c6b8f3d2447f090119e48202fdb`)
   }
+
+  initialisation(r) {
+    console.log('initialization', (r))
+  }
+
   async getBreweryDetails() {
     await this.getBreweryById().toPromise()
       .then(result => {
         this.breweryDetails = result
         console.log(this.breweryDetails.data)
+        this.getBeersList()
       })
     return await this.getBreweryById().toPromise();
+  }
+
+  async getBeersList() {
+    await this.getBeersByBrewery().toPromise()
+      .then(result => {
+        this.beersList = result
+        console.log('Beers list: ',this.beersList)
+      })
+    return await this.getBeersByBrewery().toPromise();
   }
 
   ngOnInit() {
     this.getBreweryDetails()
       .then(r => this.initialisation(r))
   }
-
 }

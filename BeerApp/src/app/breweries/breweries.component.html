@@ -18,9 +18,9 @@
     <h2>Breweries from {{selectedCode.toString()}}</h2>
   </ng-container>
   <div *ngIf="data.data; else loading">
-    <ng-container *ngFor="let item of uniqueData">
+    <ng-container *ngFor="let item of uniqueDataBrewery">
       <div>
-        <a routerLink="brewery/{{item.breweryId}}" routerLinkActive="active"><h4>{{item.brewery.name}}</h4></a>
+        <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
       </div>
     </ng-container>
   </div>
