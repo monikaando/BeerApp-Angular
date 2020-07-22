@@ -14,15 +14,16 @@ const routes: Routes = [
   },
   {
     path: "breweries",
-    component:BreweriesComponent
+    component:BreweriesComponent,
+    pathMatch: 'full'
   },
   {
     path: "beers",
     component:BeersComponent
   },
   {
-    path: "breweries/brewery/${item.breweryId}",
-    component:BreweriesDetailsComponent
+    path: "breweries/brewery/:breweryId",
+    component:BreweriesDetailsComponent,
   },
   {
     path: "**",

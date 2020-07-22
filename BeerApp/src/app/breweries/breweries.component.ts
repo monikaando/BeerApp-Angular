@@ -9,8 +9,8 @@ import {HttpClient} from "@angular/common/http";
 export class BreweriesComponent implements OnInit {
   data: any = [];
   uniqueData: any = [];
-  uniqueNames: any = [];
   codes: any = [];
+  breweryId: any=[];
   selectedCode = 'All countries'
 
   constructor(private http: HttpClient) {
@@ -21,7 +21,6 @@ export class BreweriesComponent implements OnInit {
   }
 
   initialisation(r) {
-    this.uniqueCountryNames(r)
     this.countryCodes(r);
     this.uniqueBreweries(r)
   }
@@ -52,11 +51,7 @@ export class BreweriesComponent implements OnInit {
       this.uniqueData.push(uniqueObject[i]);
     }
     console.log('UniqueData: ', this.uniqueData);
-  }
-
-  uniqueCountryNames(r) {
-    const breweryNamesArray = r.data.map(item => item.brewery.name);
-    this.uniqueNames = [...new Set(breweryNamesArray)];
+    console.log('UniqueData length: ', this.uniqueData.length);
   }
 
   ngOnInit() {

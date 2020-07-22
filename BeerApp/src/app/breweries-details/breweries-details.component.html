@@ -1,1 +1,35 @@
-<p>breweries-details works!</p>
+<div class="single-brew-page" *ngIf="breweryDetails.data; else loading">
+  <h1>{{breweryDetails.data.name}}</h1>
+  <div *ngIf="breweryDetails.data.established; else noEstablished">
+    <h5><b>Established: {{breweryDetails.data.established}}</b></h5>
+  </div>
+  <ng-template #noEstablished>
+    <p></p>
+  </ng-template>
+
+  <div class="brew-img-details">
+    <div class="brew-img" *ngIf="breweryDetails.data.images; else noImage">
+          <div>
+              <a href="{{breweryDetails.data.website}}" rel="noopener noreferrer" target="_blank">
+                  <img src="{{breweryDetails.data.images.squareMedium}}" alt="brewery-logo" />
+              </a>
+          </div>
+    </div>
+      <ng-template #noImage>
+        <p></p>
+      </ng-template>
+
+    <a href="{{breweryDetails.data.website}}" rel="noopener noreferrer" target="_blank">
+      <h4>{{breweryDetails.data.website}}</h4>
+    </a>
+    <div class="brew-description">
+      <p>{{breweryDetails.data.description}}</p>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
+
+
+

@@ -17,14 +17,16 @@
   <ng-container>
     <h2>Breweries from {{selectedCode.toString()}}</h2>
   </ng-container>
-  <ng-container *ngIf="selectedCode">
-    <ng-container *ngFor="let name of uniqueNames" >
+  <div *ngIf="data.data; else loading">
+    <ng-container *ngFor="let item of uniqueData">
       <div>
-        <h4>{{name}}</h4>
+        <a routerLink="brewery/{{item.breweryId}}" routerLinkActive="active"><h4>{{item.brewery.name}}</h4></a>
       </div>
     </ng-container>
-
-  </ng-container>
+  </div>
+  <div>
+    <ng-template #loading>
+      <p>Loading...</p>
+    </ng-template>
+  </div>
 </div>
-
-<!--Router-navigation to the detail page of breweries-->
