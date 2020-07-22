@@ -1,4 +1,4 @@
-<div class="single-brew-page" *ngIf="breweryDetails.data; else loading">
+<div class="single-brew-page" *ngIf="breweryDetails.data && beersList.data; else loading">
   <h1>{{breweryDetails.data.name}}</h1>
   <div *ngIf="breweryDetails.data.established; else noEstablished">
     <h5><b>Established: {{breweryDetails.data.established}}</b></h5>
@@ -26,11 +26,24 @@
       <p>{{breweryDetails.data.description}}</p>
     </div>
   </div>
-  <ng-container class="beers-box" *ngFor="let beer of beersList.data">
-    <h5>{{beer.name}}</h5>
-  </ng-container>
+  <div class="beers">
+    <div class="beersCounter" *ngIf="beersList.data.length === 1;  else beersNumber">
+      <h2>The brewery produces 1 beer: </h2>
+    </div>
+    <ng-template #beersNumber>
+      <h2>The brewery produces <u>{{beersList.data.length}}</u> beers: </h2>
+    </ng-template>
+    <div class="beers-box">
+      <ng-container *ngFor="let beer of beersList.data">
+        <div>
+          <h5>{{beer.name}}</h5>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 
 </div>
+
 <ng-template #loading>
   <p>Loading...</p>
 </ng-template>

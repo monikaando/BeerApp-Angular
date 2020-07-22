@@ -23,9 +23,12 @@ export class BreweriesComponent implements OnInit {
 
   initialisation(r) {
     this.countryCodes(r);
+    console.log('codes',this.codes)
+    console.log('data:', this.data)
     this.uniqueBreweries(r);
     this.uniqueDataBrewery.sort(this.dynamicSort("name"))
     console.log(this.uniqueData)
+
   }
 
   async getBreweriesData() {

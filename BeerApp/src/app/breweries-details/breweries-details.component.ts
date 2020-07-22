@@ -46,6 +46,8 @@ export class BreweriesDetailsComponent implements OnInit {
       .then(result => {
         this.beersList = result
         console.log('Beers list: ',this.beersList)
+        console.log('Beers list length: ',this.beersList.data.length)
+
       })
     return await this.getBeersByBrewery().toPromise();
   }
