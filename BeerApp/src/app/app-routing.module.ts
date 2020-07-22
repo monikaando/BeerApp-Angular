@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {BreweriesComponent} from "./breweries/breweries.component";
 import {BeersComponent} from "./beers/beers.component";
+import {BreweriesDetailsComponent} from "./breweries-details/breweries-details.component";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 
 
 const routes: Routes = [
@@ -17,6 +19,14 @@ const routes: Routes = [
   {
     path: "beers",
     component:BeersComponent
+  },
+  {
+    path: "breweries/brewery/${item.breweryId}",
+    component:BreweriesDetailsComponent
+  },
+  {
+    path: "**",
+    component:PageNotFoundComponent
   },
 ];
 

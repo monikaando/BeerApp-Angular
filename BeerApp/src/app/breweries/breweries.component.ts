@@ -8,16 +8,22 @@ import {HttpClient} from "@angular/common/http";
 })
 export class BreweriesComponent implements OnInit {
   data: any = [];
+  uniqueData: any = [];
   uniqueNames: any = [];
   codes: any = [];
-  selectedCode='All countries'
+  selectedCode = 'All countries'
 
   constructor(private http: HttpClient) {
-    this.ngAfterViewInit()
   }
 
   getBreweries() {
     return this.http.get('api/locations/?key=659d5c6b8f3d2447f090119e48202fdb')
+  }
+
+  initialisation(r) {
+    this.uniqueCountryNames(r)
+    this.countryCodes(r);
+    this.uniqueBreweries(r)
   }
 
   async getBreweriesData() {
@@ -27,21 +33,34 @@ export class BreweriesComponent implements OnInit {
       })
     return await this.getBreweries().toPromise();
   }
-  countryCodes(r){
+
+  countryCodes(r) {
     const codesArray = r.data.map(item => item.countryIsoCode);
     this.codes = [...new Set(codesArray)]
   }
+
+  uniqueBreweries(r) {
+    let uniqueObject = {};
+    let data = r.data
+    for (let i in data) {
+      if (data.hasOwnProperty(i)) {
+        const objId = data[i]['breweryId'];
+        uniqueObject[objId] = data[i];
+      }
+    }
+    for (let i in uniqueObject) {
+      this.uniqueData.push(uniqueObject[i]);
+    }
+    console.log('UniqueData: ', this.uniqueData);
+  }
+
   uniqueCountryNames(r) {
     const breweryNamesArray = r.data.map(item => item.brewery.name);
-    this.uniqueNames = [...new Set(breweryNamesArray)]
+    this.uniqueNames = [...new Set(breweryNamesArray)];
   }
+
   ngOnInit() {
     this.getBreweriesData()
-      .then(r => this.countryCodes(r))
-  }
-  ngAfterViewInit(){
-    this.getBreweriesData()
-      .then(r => this.uniqueCountryNames(r))
+      .then(r => this.initialisation(r))
   }
 }
-// r=this.data - >result of getBreweriesData()
