@@ -9,7 +9,7 @@
       value='{{this.selectedCode}}'
       (change)="filterSelectedCountry($event.target.value)"
     >
-      <option value="All countries">All countries</option>
+      <option [ngValue]="" >All countries</option>
       <option *ngFor="let item of codes" [ngValue]='item' >
         {{item}}
       </option>
