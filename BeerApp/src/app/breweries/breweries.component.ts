@@ -7,28 +7,34 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./breweries.component.scss']
 })
 export class BreweriesComponent implements OnInit {
+
   data: any = [];
   uniqueData: any = [];
   uniqueDataBrewery: any = [];
   codes: any = [];
   breweryId: any = [];
-  selectedCode = 'All countries'
+  selectedCode = 'All countries';
+  breweriesByCountry: any = [];
 
   constructor(private http: HttpClient) {
+    this.getBreweriesByCountry()
   }
 
   getBreweries() {
     return this.http.get('api/locations/?key=659d5c6b8f3d2447f090119e48202fdb')
   }
 
+  getBreweriesByCountry() {
+    return this.http.get(`api/locations/?countryIsoCode=${this.selectedCode}&order=breweryName&key=659d5c6b8f3d2447f090119e48202fdb`)
+  }
+
   initialisation(r) {
     this.countryCodes(r);
-    console.log('codes',this.codes)
-    console.log('data:', this.data)
     this.uniqueBreweries(r);
-    this.uniqueDataBrewery.sort(this.dynamicSort("name"))
-    console.log(this.uniqueData)
-
+    this.uniqueDataBrewery.sort(this.dynamicSort("name"))  //alphabetical order
+    console.log('Unique brewery', this.uniqueDataBrewery)
+    console.log('Unique data', this.uniqueData)
+    console.log('breweriesByCountry:', this.breweriesByCountry)
   }
 
   async getBreweriesData() {
@@ -37,6 +43,14 @@ export class BreweriesComponent implements OnInit {
         this.data = result
       })
     return await this.getBreweries().toPromise();
+  }
+
+  async getBreweriesCountryData() {
+    await this.getBreweriesByCountry().toPromise()
+      .then(result => {
+        this.breweriesByCountry = result
+      })
+    return await this.getBreweriesByCountry().toPromise();
   }
 
   countryCodes(r) {
@@ -57,10 +71,9 @@ export class BreweriesComponent implements OnInit {
       this.uniqueData.push(uniqueObject[i]);
       this.uniqueDataBrewery.push(uniqueObject[i].brewery);
     }
-    console.log('UniqueData: ', this.uniqueData);
-    console.log('uniqueDataBrewery: ', this.uniqueDataBrewery);
   }
 
+//alphabetical order
   dynamicSort(property) {
     let sortOrder = 1;
 
@@ -75,6 +88,13 @@ export class BreweriesComponent implements OnInit {
         return a[property].localeCompare(b[property]);
       }
     }
+  }
+
+  filterSelectedCountry(selectedValue: string) {
+    console.log('selected value: ', selectedValue)
+    this.getBreweriesCountryData()
+      // .then(r => console.log(this.breweriesByCountry))
+      .then(r => this.uniqueBreweries(r))
   }
 
   ngOnInit() {

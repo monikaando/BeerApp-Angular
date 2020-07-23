@@ -6,10 +6,11 @@
       aria-label="country-code"
       name="selectedCode"
       [(ngModel)]="selectedCode"
-      value="All countries"
+      value='{{this.selectedCode}}'
+      (change)="filterSelectedCountry($event.target.value)"
     >
       <option value="All countries">All countries</option>
-      <option *ngFor="let item of codes" [ngValue]='item'>
+      <option *ngFor="let item of codes" [ngValue]='item' >
         {{item}}
       </option>
     </select>
@@ -18,11 +19,20 @@
     <h2>Breweries from {{selectedCode.toString()}}</h2>
   </ng-container>
   <div *ngIf="data.data; else loading">
-    <ng-container *ngFor="let item of uniqueDataBrewery">
-      <div>
-        <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
-      </div>
-    </ng-container>
+    <div *ngIf="selectedCode==='All countries'; else chosenCountries">
+      <ng-container *ngFor="let item of uniqueDataBrewery">
+        <div>
+          <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
+        </div>
+      </ng-container>
+    </div>
+    <ng-template #chosenCountries>
+      <ng-container *ngFor="let item of breweriesByCountry.data">
+        <div>
+          <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.brewery.name}}</h4></a>
+        </div>
+      </ng-container>
+    </ng-template>
   </div>
   <div>
     <ng-template #loading>
