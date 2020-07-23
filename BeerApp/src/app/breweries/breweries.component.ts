@@ -16,6 +16,7 @@ export class BreweriesComponent implements OnInit {
   selectedCode = 'All countries';
   brewByCountry: any = [];
   uniqueBrewByCountry: any =[];
+  searchName: string;
 
   constructor(private http: HttpClient) {
   }
@@ -27,11 +28,13 @@ export class BreweriesComponent implements OnInit {
   getBreweriesByCountry() {
     return this.http.get(`api/locations/?countryIsoCode=${this.selectedCode}&order=breweryName&key=659d5c6b8f3d2447f090119e48202fdb`)
   }
-
+  searchCountryByName() {
+     return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&type=brewery&q=${this.searchName}`)
+}
   initialisation(r) {
     this.countryCodes(r);
     this.uniqueBreweries(r);
-    this.uniqueDataBrewery.sort(this.dynamicSort("name"))  //alphabetical order
+    this.uniqueDataBrewery.sort(this.alphabeticalOrder("name"))  //alphabetical order
 
     console.log('data', this.data)
     console.log('uniqueData', this.uniqueData)
@@ -96,7 +99,7 @@ export class BreweriesComponent implements OnInit {
   }
 
 //alphabetical order
-  dynamicSort(property) {
+  alphabeticalOrder(property) {
     let sortOrder = 1;
 
     if (property[0] === "-") {
