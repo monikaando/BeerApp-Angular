@@ -29,7 +29,7 @@
     <ng-template #chosenCountries>
       <ng-container *ngFor="let item of uniqueBrewByCountry">
         <div>
-          <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.brewery.name}}</h4></a>
+          <a routerLink="brewery/{{item.breweryId}}" routerLinkActive="active"><h4>{{item.brewery.name}}</h4></a>
         </div>
       </ng-container>
     </ng-template>
