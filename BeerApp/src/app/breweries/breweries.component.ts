@@ -8,16 +8,16 @@ import {HttpClient} from "@angular/common/http";
 })
 export class BreweriesComponent implements OnInit {
 
-  data: any = [];
-  uniqueData: any = [];
-  uniqueDataBrewery: any = [];
+  data: any = []; //this.data.data
+  uniqueData: any = []; //unique this.data.data
+  uniqueDataBrewery: any = []; //unique this.data.data.brewery
+  breweryId: any=[];
   codes: any = [];
-  breweryId: any = [];
   selectedCode = 'All countries';
-  breweriesByCountry: any = [];
+  brewByCountry: any = [];
+  uniqueBrewByCountry: any =[];
 
   constructor(private http: HttpClient) {
-    this.getBreweriesByCountry()
   }
 
   getBreweries() {
@@ -32,11 +32,19 @@ export class BreweriesComponent implements OnInit {
     this.countryCodes(r);
     this.uniqueBreweries(r);
     this.uniqueDataBrewery.sort(this.dynamicSort("name"))  //alphabetical order
-    console.log('Unique brewery', this.uniqueDataBrewery)
-    console.log('Unique data', this.uniqueData)
-    console.log('breweriesByCountry:', this.breweriesByCountry)
-  }
 
+    console.log('data', this.data)
+    console.log('uniqueData', this.uniqueData)
+    console.log('uniqueDataBrewery', this.uniqueDataBrewery)
+    console.log('codes', this. codes)
+    console.log('selectedCode', this.selectedCode)
+    console.log('brewByCountry:', this.brewByCountry)
+    console.log('uniqueBrewByCountry:', this.uniqueBrewByCountry)
+  }
+  showCountries(res) {
+    this.uniqueBrewByCountry = [];
+    this.uniqueBreweriesByCountry(res)
+  }
   async getBreweriesData() {
     await this.getBreweries().toPromise()
       .then(result => {
@@ -48,7 +56,7 @@ export class BreweriesComponent implements OnInit {
   async getBreweriesCountryData() {
     await this.getBreweriesByCountry().toPromise()
       .then(result => {
-        this.breweriesByCountry = result
+        this.brewByCountry = result
       })
     return await this.getBreweriesByCountry().toPromise();
   }
@@ -73,6 +81,20 @@ export class BreweriesComponent implements OnInit {
     }
   }
 
+  uniqueBreweriesByCountry(res) {
+    let uniqueObject = {};
+    let data = res.data
+    for (let i in data) {
+      if (data.hasOwnProperty(i)) {
+        const objId = data[i].brewery['name'];
+        uniqueObject[objId] = data[i];
+      }
+    }
+    for (let i in uniqueObject) {
+      this.uniqueBrewByCountry.push(uniqueObject[i]);
+    }
+  }
+
 //alphabetical order
   dynamicSort(property) {
     let sortOrder = 1;
@@ -92,13 +114,15 @@ export class BreweriesComponent implements OnInit {
 
   filterSelectedCountry(selectedValue: string) {
     console.log('selected value: ', selectedValue)
+    console.log('uniqueBrewByCountry: ', this.uniqueBrewByCountry)
     this.getBreweriesCountryData()
-      // .then(r => console.log(this.breweriesByCountry))
-      .then(r => this.uniqueBreweries(r))
+      .then(res=>this.showCountries(res))
   }
 
   ngOnInit() {
     this.getBreweriesData()
       .then(r => this.initialisation(r))
+
   }
+
 }

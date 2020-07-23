@@ -27,7 +27,7 @@
       </ng-container>
     </div>
     <ng-template #chosenCountries>
-      <ng-container *ngFor="let item of breweriesByCountry.data">
+      <ng-container *ngFor="let item of uniqueBrewByCountry">
         <div>
           <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.brewery.name}}</h4></a>
         </div>
