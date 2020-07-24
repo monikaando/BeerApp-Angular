@@ -1,14 +1,14 @@
 <div class="brewery-list-page">
   <h1>Find a brewery</h1>
 
-  <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
+<!--  <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">-->
   <div class="select">
     <select
       aria-label="country-code"
       name="selectedCode"
       [(ngModel)]="selectedCode"
       value='{{this.selectedCode}}'
-      (change)="filterSelectedCountry($event.target.value)"
+      (change)="onChangeCountry($event.target.value)"
     >
       <option [ngValue]="">All countries</option>
       <option *ngFor="let item of codes" [ngValue]='item'>
@@ -16,9 +16,9 @@
       </option>
     </select>
   </div>
-  <div *ngIf="data.data; else loading">
+  <div *ngIf="data; else loading">
     <div *ngIf="searchName !==''; else showPage">
-      <ng-container *ngFor="let item of searchResult.data">
+      <ng-container *ngFor="let item of selectedBreweries">
         <div>
           <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
         </div>
@@ -29,7 +29,7 @@
         <h2>Breweries from {{selectedCode.toString()}}</h2>
       </ng-container>
       <div *ngIf="selectedCode==='All countries'; else chosenCountries">
-        <ng-container *ngFor="let item of uniqueDataBrewery">
+        <ng-container *ngFor="let item of selectedBreweries">
           <div>
             <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
           </div>
@@ -46,6 +46,7 @@
     </ng-template>
   </div>
   <ng-template #loading>
-    <p>Loading...</p>
+    <h3><b>Loading...</b></h3>
+    <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif" alt="beer"/>
   </ng-template>
 </div>

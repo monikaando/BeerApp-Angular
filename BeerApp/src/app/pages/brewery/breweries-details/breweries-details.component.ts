@@ -7,6 +7,7 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './breweries-details.component.html',
   styleUrls: ['./breweries-details.component.scss']
 })
+//if no photo? no description?, no beers list?
 export class BreweriesDetailsComponent implements OnInit {
   breweryId: any = [];
   breweryDetails: any = [];
@@ -46,7 +47,7 @@ export class BreweriesDetailsComponent implements OnInit {
       .then(result => {
         this.beersList = result
         console.log('Beers list: ',this.beersList)
-        console.log('Beers list length: ',this.beersList.data.length)
+
 
       })
     return await this.getBeersByBrewery().toPromise();

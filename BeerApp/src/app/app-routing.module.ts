@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import {BreweriesComponent} from "./breweries/breweries.component";
-import {BeersComponent} from "./beers/beers.component";
-import {BreweriesDetailsComponent} from "./breweries-details/breweries-details.component";
-import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
+import {HomeComponent} from "./pages/home/home.component";
+import {BreweriesComponent} from "./pages/brewery/breweries/breweries.component";
+import {BeersComponent} from "./pages/beer/beers/beers.component";
+import {BreweriesDetailsComponent} from "./pages/brewery/breweries-details/breweries-details.component";
+import {PageNotFoundComponent} from "./pages/page-not-found/page-not-found.component";
 
 
 const routes: Routes = [
