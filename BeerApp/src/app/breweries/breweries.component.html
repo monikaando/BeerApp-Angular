@@ -1,7 +1,7 @@
 <div class="brewery-list-page">
   <h1>Find a brewery</h1>
 
-  <input type="text" [(ngModel)]="searchByBreweryName" (change)="onNameChange($event)" placeholder="Search by name">
+  <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
   <div class="select">
     <select
       aria-label="country-code"
@@ -17,7 +17,7 @@
     </select>
   </div>
   <div *ngIf="data.data; else loading">
-    <div *ngIf="searchByBreweryName !==''; else showPage">
+    <div *ngIf="searchName !==''; else showPage">
       <ng-container *ngFor="let item of searchResult.data">
         <div>
           <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>

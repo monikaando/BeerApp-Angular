@@ -15,7 +15,7 @@ export class BreweriesComponent implements OnInit {
   selectedCode = 'All countries';
   brewByCountry: any = [];
   uniqueBrewByCountry: any = [];
-  searchByBreweryName = '';
+  searchName = '';
   searchResult: any = [];
 
   constructor(private http: HttpClient) {
@@ -31,19 +31,19 @@ export class BreweriesComponent implements OnInit {
   }
 
   searchBreweryByName() {
-    return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&type=brewery&q=${this.searchByBreweryName}`)
+    return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&type=brewery&q=${this.searchName}`)
   }
 
-  initialisation(r) {
-    this.data = r
-    this.countryCodes(r);
-    this.uniqueBreweries(r);
+  initialisation(result) {
+    this.data = result
+    this.countryCodes(result);
+    this.uniqueBreweries(result);
     this.uniqueDataBrewery.sort(this.alphabeticalOrder("name"))
   }
 
-  showCountries(res) {
+  showCountries(result) {
     this.uniqueBrewByCountry = [];
-    this.uniqueBreweriesByCountry(res)
+    this.uniqueBreweriesByCountry(result)
   }
 
   async getBreweriesCountryData() {
@@ -62,14 +62,14 @@ export class BreweriesComponent implements OnInit {
       })
   }
 
-  countryCodes(r) {
-    const codesArray = r.data.map(item => item.countryIsoCode);
+  countryCodes(result) {
+    const codesArray = result.data.map(item => item.countryIsoCode);
     this.codes = [...new Set(codesArray)]
   }
 
-  uniqueBreweries(r) {
+  uniqueBreweries(result) {
     let uniqueObject = {};
-    let data = r.data
+    let data = result.data
     for (let i in data) {
       if (data.hasOwnProperty(i)) {
         const objId = data[i]['breweryId'];
@@ -82,9 +82,9 @@ export class BreweriesComponent implements OnInit {
     }
   }
 
-  uniqueBreweriesByCountry(res) {
+  uniqueBreweriesByCountry(result) {
     let uniqueObject = {};
-    let data = res.data
+    let data = result.data
     for (let i in data) {
       if (data.hasOwnProperty(i)) {
         const objId = data[i].brewery['name'];
@@ -98,7 +98,6 @@ export class BreweriesComponent implements OnInit {
 
   alphabeticalOrder(property) {
     let sortOrder = 1;
-
     if (property[0] === "-") {
       sortOrder = -1;
       property = property.substr(1);
@@ -115,13 +114,13 @@ export class BreweriesComponent implements OnInit {
   filterSelectedCountry(selectedValue: string) {
     console.log('selected value: ', selectedValue)
     console.log('uniqueBrewByCountry: ', this.uniqueBrewByCountry)
-    this.searchByBreweryName = ''
+    this.searchName = ''
     this.getBreweriesCountryData()
       .then(res => this.showCountries(res))
   }
 
   onNameChange(value) {
-    value = this.searchByBreweryName.toLowerCase();
+    value = this.searchName.toLowerCase();
     this.uniqueDataBrewery = [];
     this.uniqueBrewByCountry = [];
     this.getBreweriesByName()
@@ -130,6 +129,6 @@ export class BreweriesComponent implements OnInit {
 
   ngOnInit() {
     this.getBreweries()
-      .then(r => this.initialisation(r))
+      .then(result => this.initialisation(result))
   }
 }
