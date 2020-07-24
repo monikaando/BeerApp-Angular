@@ -10,42 +10,42 @@
       value='{{this.selectedCode}}'
       (change)="filterSelectedCountry($event.target.value)"
     >
-      <option [ngValue]="" >All countries</option>
-      <option *ngFor="let item of codes" [ngValue]='item' >
+      <option [ngValue]="">All countries</option>
+      <option *ngFor="let item of codes" [ngValue]='item'>
         {{item}}
       </option>
     </select>
   </div>
-  <ng-container>
-    <h2>Breweries from {{selectedCode.toString()}}</h2>
-  </ng-container>
   <div *ngIf="data.data; else loading">
-    <div *ngIf="searchResult.length>0; else showPage">
-    <ng-container *ngFor="let item of searchResult.data">
-      <div>
-        <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
-      </div>
-    </ng-container>
-  </div>
-    <ng-template #showPage>
-    <div *ngIf="selectedCode==='All countries'; else chosenCountries">
-      <ng-container *ngFor="let item of uniqueDataBrewery">
+    <div *ngIf="searchByBreweryName !==''; else showPage">
+      <ng-container *ngFor="let item of searchResult.data">
         <div>
           <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
         </div>
       </ng-container>
     </div>
-    <ng-template #chosenCountries>
-      <ng-container *ngFor="let item of uniqueBrewByCountry">
-        <div>
-          <a routerLink="brewery/{{item.breweryId}}" routerLinkActive="active"><h4>{{item.brewery.name}}</h4></a>
-        </div>
+    <ng-template #showPage>
+      <ng-container>
+        <h2>Breweries from {{selectedCode.toString()}}</h2>
       </ng-container>
-    </ng-template>
+      <div *ngIf="selectedCode==='All countries'; else chosenCountries">
+        <ng-container *ngFor="let item of uniqueDataBrewery">
+          <div>
+            <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
+          </div>
+        </ng-container>
+      </div>
+      <ng-template #chosenCountries>
+        <ng-container *ngFor="let item of uniqueBrewByCountry">
+          <div>
+            <a routerLink="brewery/{{item.breweryId}}" routerLinkActive="active"><h4>{{item.brewery.name}}</h4></a>
+          </div>
+        </ng-container>
+      </ng-template>
 
-  </ng-template>
-  </div>
-    <ng-template #loading>
-      <p>Loading...</p>
     </ng-template>
+  </div>
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
 </div>
