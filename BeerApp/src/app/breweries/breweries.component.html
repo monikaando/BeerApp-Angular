@@ -1,6 +1,7 @@
 <div class="brewery-list-page">
   <h1>Find a brewery</h1>
-  <h3>Select a country from the list</h3>
+
+  <input type="text" [(ngModel)]="searchByBreweryName" (change)="onNameChange($event)" placeholder="Search by name">
   <div class="select">
     <select
       aria-label="country-code"
@@ -19,6 +20,14 @@
     <h2>Breweries from {{selectedCode.toString()}}</h2>
   </ng-container>
   <div *ngIf="data.data; else loading">
+    <div *ngIf="searchResult.length>0; else showPage">
+    <ng-container *ngFor="let item of searchResult.data">
+      <div>
+        <a routerLink="brewery/{{item.id}}" routerLinkActive="active"><h4>{{item.name}}</h4></a>
+      </div>
+    </ng-container>
+  </div>
+    <ng-template #showPage>
     <div *ngIf="selectedCode==='All countries'; else chosenCountries">
       <ng-container *ngFor="let item of uniqueDataBrewery">
         <div>
@@ -33,10 +42,10 @@
         </div>
       </ng-container>
     </ng-template>
+
+  </ng-template>
   </div>
-  <div>
     <ng-template #loading>
       <p>Loading...</p>
     </ng-template>
-  </div>
 </div>

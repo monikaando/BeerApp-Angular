@@ -7,16 +7,15 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./breweries.component.scss']
 })
 export class BreweriesComponent implements OnInit {
-
   data: any = []; //this.data.data
   uniqueData: any = []; //unique this.data.data
   uniqueDataBrewery: any = []; //unique this.data.data.brewery
-  breweryId: any=[];
   codes: any = [];
   selectedCode = 'All countries';
   brewByCountry: any = [];
-  uniqueBrewByCountry: any =[];
-  searchName: string;
+  uniqueBrewByCountry: any = [];
+  searchByBreweryName: '';
+  searchResult: any=[]
 
   constructor(private http: HttpClient) {
   }
@@ -28,9 +27,11 @@ export class BreweriesComponent implements OnInit {
   getBreweriesByCountry() {
     return this.http.get(`api/locations/?countryIsoCode=${this.selectedCode}&order=breweryName&key=659d5c6b8f3d2447f090119e48202fdb`)
   }
-  searchCountryByName() {
-     return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&type=brewery&q=${this.searchName}`)
-}
+
+  searchBreweryByName() {
+    return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&type=brewery&q=${this.searchByBreweryName}`)
+  }
+
   initialisation(r) {
     this.countryCodes(r);
     this.uniqueBreweries(r);
@@ -39,15 +40,18 @@ export class BreweriesComponent implements OnInit {
     console.log('data', this.data)
     console.log('uniqueData', this.uniqueData)
     console.log('uniqueDataBrewery', this.uniqueDataBrewery)
-    console.log('codes', this. codes)
+    console.log('codes', this.codes)
     console.log('selectedCode', this.selectedCode)
     console.log('brewByCountry:', this.brewByCountry)
     console.log('uniqueBrewByCountry:', this.uniqueBrewByCountry)
   }
+
   showCountries(res) {
     this.uniqueBrewByCountry = [];
     this.uniqueBreweriesByCountry(res)
   }
+
+
   async getBreweriesData() {
     await this.getBreweries().toPromise()
       .then(result => {
@@ -62,6 +66,13 @@ export class BreweriesComponent implements OnInit {
         this.brewByCountry = result
       })
     return await this.getBreweriesByCountry().toPromise();
+  }
+  async getBreweriesByName() {
+    await this.searchBreweryByName().toPromise()
+      .then(result => {
+        this.searchResult= result
+      })
+    return await this.searchBreweryByName().toPromise();
   }
 
   countryCodes(r) {
@@ -119,7 +130,16 @@ export class BreweriesComponent implements OnInit {
     console.log('selected value: ', selectedValue)
     console.log('uniqueBrewByCountry: ', this.uniqueBrewByCountry)
     this.getBreweriesCountryData()
-      .then(res=>this.showCountries(res))
+      .then(res => this.showCountries(res))
+  }
+
+  onNameChange(value) {
+    value=this.searchByBreweryName.toLowerCase();
+    console.log(value)
+    this.uniqueDataBrewery =[];
+    this.uniqueBrewByCountry =[];
+    this.getBreweriesByName().then(r => console.log('searchResult',this.searchResult))
+
   }
 
   ngOnInit() {
