@@ -4,6 +4,9 @@
     <label>
       <input type="text" [(ngModel)]="searchName" placeholder="search by name" (change)="onNameChange($event)">
     </label>
+    <label>
+      <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
+    </label>
   </div>
   <div class="beers-box">
     <ng-container *ngFor="let item of selectedBeersNames">

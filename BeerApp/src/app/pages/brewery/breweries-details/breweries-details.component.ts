@@ -1,15 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-// import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../../../../services/api.service";
-import {Brewery} from "../../../models/brewery";
 
 @Component({
   selector: 'app-breweries-details',
   templateUrl: './breweries-details.component.html',
   styleUrls: ['./breweries-details.component.scss']
 })
-//if no photo? no description?, no beers list?
 export class BreweriesDetailsComponent implements OnInit {
   breweryId: any = [];
   breweryDetails: any = [];
