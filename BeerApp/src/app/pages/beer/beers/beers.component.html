@@ -1,4 +1,4 @@
-<div class="search-page">
+<div class="search-page" *ngIf="!loadingInProgress; else loading">
   <h2>Search beers by name, type or country</h2>
   <div class="search-boxes">
     <label>
@@ -7,10 +7,47 @@
     <label>
       <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
     </label>
+
+    <div class="select">
+      <select
+        aria-label="country-code"
+        name="selectedCode"
+        [(ngModel)]="selectedCode"
+        value='{{this.selectedCode}}'
+        (change)="onCountryChange($event.target.value)"
+      >
+        <option value="" [defaultSelected]="true">Choose a country</option>
+        <option *ngFor="let item of  codes" [ngValue]='item'>
+          {{item}}
+        </option>
+      </select>
+    </div>
   </div>
-  <div class="beers-box">
-    <ng-container *ngFor="let item of selectedBeersNames">
-      <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
-    </ng-container>
+  <div *ngIf="selectedBeers.length === 0; else searchForBeers">
+    <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
+      <h3>{{randomBeer.name}}</h3>
+    </a>
+    <h5>{{randomBeer.style.name}}</h5>
+    <h6>{{randomBeer.style.description}}</h6>
   </div>
+
+  <ng-template #searchForBeers>
+    <div class="beers-box" *ngIf="selectedBeers; else loading2">
+      <ng-container *ngFor="let item of selectedBeers">
+
+        <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
+      </ng-container>
+    </div>
+    <ng-template #loading2>
+      <h3><b>Loading...</b></h3>
+      <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+           alt="beer"/>
+    </ng-template>
+</ng-template>
 </div>
+
+<ng-template #loading>
+  <h3><b>Loading...</b></h3>
+  <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+       alt="beer"/>
+</ng-template>

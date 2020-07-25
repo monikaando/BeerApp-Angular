@@ -12,7 +12,7 @@ export class BreweriesComponent implements OnInit {
   data: Array<Brewery>;
   selectedBreweries: Array<Brewery>
   codes: any = [];
-  selectedCode = 'All countries';
+  selectedCode = "All countries";
   breweriesByCountry: any = [];
   uniqueBrewByCountry: any = [];
   searchName: String = "";
@@ -61,7 +61,7 @@ export class BreweriesComponent implements OnInit {
     })
   }
 
-  onChangeCountry(selectedValue: string) {
+  onCountryChange(selectedValue: string) {
     console.log('selected value: ', selectedValue)
     this.searchName = ''
     this.uniqueBrewByCountry = [];
@@ -86,7 +86,6 @@ export class BreweriesComponent implements OnInit {
     this.apiService.searchBreweryByName(this.searchName).subscribe((response) => {
       this.selectedBreweries = response
       console.log('selectedBreweries/search by name: ', this.selectedBreweries)
-
     })
   }
 
