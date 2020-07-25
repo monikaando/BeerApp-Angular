@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
+// import {HttpClient} from "@angular/common/http";
+import {ApiService} from "../../../../services/api.service";
+import {Brewery} from "../../../models/brewery";
 
 @Component({
   selector: 'app-breweries-details',
@@ -13,48 +15,32 @@ export class BreweriesDetailsComponent implements OnInit {
   breweryDetails: any = [];
   beersList: any = [];
 
-  constructor(private http: HttpClient,
+  constructor(private apiService: ApiService,
               private router: Router,
               public route: ActivatedRoute) {
 
     this.breweryId = this.route.snapshot.paramMap.get('breweryId'); //get id parameter
   }
+  ngOnInit() {
+    this.getBreweryById()
+    console.log('breweryId',this.breweryId);
+    console.log('breweryDetails',this.breweryDetails)
+    console.log('beersList',this.beersList);
+  }
 
   getBreweryById() {
-    return this.http.get(`api/brewery/${this.breweryId}/?key=659d5c6b8f3d2447f090119e48202fdb`)
-  }
+    this.apiService.getBreweryById(this.breweryId).subscribe((response)=>{
+      this.breweryDetails = response
+      console.log('breweryDetails',this.breweryDetails)
 
-  getBeersByBrewery() {
-    return this.http.get(`api/brewery/${this.breweryId}/beers/?key=659d5c6b8f3d2447f090119e48202fdb`)
-  }
+      this.getBeersByBrewery();
+    })
+}
+  getBeersByBrewery(){
+    this.apiService.getBeersByBrewery(this.breweryId).subscribe((response)=>{
+      this.beersList = response;
+      console.log('beersList',this.beersList);
 
-  initialisation(r) {
-    console.log('initialization', (r))
-  }
-
-  async getBreweryDetails() {
-    await this.getBreweryById().toPromise()
-      .then(result => {
-        this.breweryDetails = result
-        console.log(this.breweryDetails.data)
-        this.getBeersList()
-      })
-    return await this.getBreweryById().toPromise();
-  }
-
-  async getBeersList() {
-    await this.getBeersByBrewery().toPromise()
-      .then(result => {
-        this.beersList = result
-        console.log('Beers list: ',this.beersList)
-
-
-      })
-    return await this.getBeersByBrewery().toPromise();
-  }
-
-  ngOnInit() {
-    this.getBreweryDetails()
-      .then(r => this.initialisation(r))
+    })
   }
 }

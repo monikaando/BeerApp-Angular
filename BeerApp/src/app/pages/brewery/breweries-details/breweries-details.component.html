@@ -1,51 +1,50 @@
-<div class="single-brew-page" *ngIf="breweryDetails.data && beersList.data; else loading">
-  <h1>{{breweryDetails.data.name}}</h1>
-  <div *ngIf="breweryDetails.data.established; else noEstablished">
-    <h5><b>Established: {{breweryDetails.data.established}}</b></h5>
+<div class="single-brew-page" *ngIf="beersList.length>0; else loading">
+  <h1>{{breweryDetails.name}}</h1>
+  <div *ngIf="breweryDetails.established; else noEstablished">
+    <h5><b>Established: {{breweryDetails.established}}</b></h5>
   </div>
   <ng-template #noEstablished>
     <p></p>
   </ng-template>
-
   <div class="brew-img-details">
-    <div class="brew-img" *ngIf="breweryDetails.data.images; else noImage">
+    <div class="brew-img" *ngIf="breweryDetails.images; else noImage">
       <div>
-        <a href="{{breweryDetails.data.website}}" rel="noopener noreferrer" target="_blank">
-          <img src="{{breweryDetails.data.images.squareMedium}}" alt="brewery-logo"/>
+        <a href="{{breweryDetails.website}}" rel="noopener noreferrer" target="_blank">
+          <img src="{{breweryDetails.images.squareMedium}}" alt="brewery-logo"/>
         </a>
       </div>
     </div>
     <ng-template #noImage>
       <p></p>
     </ng-template>
-
-    <a href="{{breweryDetails.data.website}}" rel="noopener noreferrer" target="_blank">
-      <h4>{{breweryDetails.data.website}}</h4>
+    <a href="{{breweryDetails.website}}" rel="noopener noreferrer" target="_blank">
+      <h4>{{breweryDetails.website}}</h4>
     </a>
     <div class="brew-description">
-      <p>{{breweryDetails.data.description}}</p>
+      <p>{{breweryDetails.description}}</p>
     </div>
   </div>
   <div class="beers">
-    <div class="beersCounter" *ngIf="beersList.data.length === 1;  else beersNumber">
+    <div class="beersCounter" *ngIf="beersList.length === 1;  else beersNumber">
       <h2>The brewery produces 1 beer: </h2>
     </div>
     <ng-template #beersNumber>
-      <h2>The brewery produces <u>{{beersList.data.length}}</u> beers: </h2>
+      <h2>The brewery produces <u>{{beersList.length}}</u> beers: </h2>
     </ng-template>
     <div class="beers-box">
-      <ng-container *ngFor="let beer of beersList.data">
+      <ng-container *ngFor="let beer of beersList">
         <div>
           <h5>{{beer.name}}</h5>
         </div>
       </ng-container>
     </div>
   </div>
-
 </div>
 
-<ng-template #loading>
-  <p>Loading...</p>
+<ng-template #loading><br><br><br>
+  <h3><b>Loading...</b></h3>
+  <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+       alt="beer"/>
 </ng-template>
 
 

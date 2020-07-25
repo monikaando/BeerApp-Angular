@@ -35,6 +35,13 @@ export class BreweriesComponent implements OnInit {
   getLocations() {  //Get all country codes for a dropdown list
     this.apiService.getLocations().subscribe((response) => {
       this.codes = response
+        .filter((brewery) => {
+          return brewery.countryIsoCode !== undefined && brewery.countryIsoCode !== null
+        })
+        .map((brewery) => {
+          return brewery.countryIsoCode
+        })
+
       console.log('codes/all country codes: ', this.codes)
       this.countryCodes(response)
       console.log('codes/unique country codes: ', this.codes)

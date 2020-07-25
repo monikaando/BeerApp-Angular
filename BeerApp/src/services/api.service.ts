@@ -16,6 +16,7 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
+//breweries
   getBreweries(): Observable<any> {
     let breweries = [];
     return this.http.get('api/breweries?withLocations=Y&key=659d5c6b8f3d2447f090119e48202fdb').pipe(map((data: ApiResponse) => {
@@ -47,5 +48,22 @@ export class ApiService {
       return breweriesByName;
     }))
   }
+  getBreweryById(breweryId): Observable<any> {
+    let breweriesById = [];
+    return this.http.get(`api/brewery/${breweryId}/?key=659d5c6b8f3d2447f090119e48202fdb`).pipe(map((data:ApiResponse)=>{
+      breweriesById = data.data;
+      return breweriesById;
+    }))
+  }
+  getBeersByBrewery(breweryId): Observable<any> {
+    let beersByBrewery=[];
+    return this.http.get(`api/brewery/${breweryId}/beers/?key=659d5c6b8f3d2447f090119e48202fdb`).pipe(map((data:ApiResponse)=>{
+      beersByBrewery = data.data;
+      return beersByBrewery;
+    }))
+
+  }
+
 }
 
+//beers

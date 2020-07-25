@@ -1,6 +1,5 @@
 <div class="brewery-list-page">
   <h1>Find a brewery</h1>
-
   <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
   <div class="select">
     <select
@@ -42,11 +41,11 @@
           </div>
         </ng-container>
       </ng-template>
-
     </ng-template>
   </div>
   <ng-template #loading>
     <h3><b>Loading...</b></h3>
-    <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif" alt="beer"/>
+    <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+         alt="beer"/>
   </ng-template>
 </div>
