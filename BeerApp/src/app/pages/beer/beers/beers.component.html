@@ -1,3 +1,13 @@
 <div class="search-page">
   <h2>Search beers by name, type or country</h2>
+  <div class="search-boxes">
+    <label>
+      <input type="text" [(ngModel)]="searchName" placeholder="search by name" (change)="onNameChange($event)">
+    </label>
+  </div>
+  <div class="beers-box">
+    <ng-container *ngFor="let item of selectedBeersNames">
+      <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
+    </ng-container>
+  </div>
 </div>

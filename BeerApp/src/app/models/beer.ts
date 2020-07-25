@@ -1,5 +1,5 @@
-// interface Image {
-//   squareMedium: String,
+// interface Style {
+//   name: String,
 // }
 //
 // interface Location {
@@ -10,8 +10,11 @@
 //   id: number,
 //   name: string,
 //   description: string,
-//   established: number,
+//   abv: string,
+//   ibuMin: string,
+//   ibuMax: string,
 //   images: Image,
 //   website: string,
+//   style: Style,
 //   locations: Array<Location>
 // }

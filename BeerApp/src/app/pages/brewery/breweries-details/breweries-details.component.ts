@@ -14,6 +14,7 @@ export class BreweriesDetailsComponent implements OnInit {
   breweryId: any = [];
   breweryDetails: any = [];
   beersList: any = [];
+  loadingInProgress=true;
 
   constructor(private apiService: ApiService,
               private router: Router,
@@ -23,6 +24,7 @@ export class BreweriesDetailsComponent implements OnInit {
   }
   ngOnInit() {
     this.getBreweryById()
+    this.loadingInProgress=false;
     console.log('breweryId',this.breweryId);
     console.log('breweryDetails',this.breweryDetails)
     console.log('beersList',this.beersList);
