@@ -9,15 +9,13 @@ import {Brewery} from "../../../models/brewery";
 })
 
 export class BreweriesComponent implements OnInit {
-  data: Array<Brewery>; //all unique breweries
+  data: Array<Brewery>;
   selectedBreweries: Array<Brewery>
-  codes: any = []; //country codes
-
+  codes: any = [];
   selectedCode = 'All countries';
   breweriesByCountry: any = [];
   uniqueBrewByCountry: any = [];
   searchName: String = "";
-  searchResult: any = [];
 
   constructor(private apiService: ApiService) {
   }
@@ -27,13 +25,13 @@ export class BreweriesComponent implements OnInit {
     this.getLocations()
   }
 
-  getBreweries() {//Get all unique breweries in alphabetical order
+  getBreweries() {
     this.apiService.getBreweries().subscribe((response) => {
       this.data = response
-      this.selectedBreweries=this.data
-      // console.log('data/all breweries: ', this.selectedBreweries)
+      this.selectedBreweries = this.data
     })
   }
+
   getLocations() {  //Get all country codes for a dropdown list
     this.apiService.getLocations().subscribe((response) => {
       this.codes = response
@@ -42,25 +40,27 @@ export class BreweriesComponent implements OnInit {
       console.log('codes/unique country codes: ', this.codes)
     })
   }
+
   countryCodes(response) {
     const codesArray = response.map(item => item.countryIsoCode);
     this.codes = [...new Set(codesArray)]
   }
 
-
   getBreweriesByCountry() {
-    this.apiService.getBreweriesByCountry(this.selectedCode).subscribe((response)=>{
-      this.breweriesByCountry=response
+    this.apiService.getBreweriesByCountry(this.selectedCode).subscribe((response) => {
+      this.breweriesByCountry = response
       console.log('breweriesByCountry/all breweries by country: ', this.uniqueBrewByCountry)
       this.uniqueBreweriesByCountry(response);
     })
   }
+
   onChangeCountry(selectedValue: string) {
     console.log('selected value: ', selectedValue)
     this.searchName = ''
-    this.uniqueBrewByCountry=[];
+    this.uniqueBrewByCountry = [];
     this.getBreweriesByCountry()
   }
+
   uniqueBreweriesByCountry(response) {
     let uniqueObject = {};
     let data = response
@@ -75,19 +75,19 @@ export class BreweriesComponent implements OnInit {
     }
   }
 
+  searchBreweriesByName() {
+    this.apiService.searchBreweryByName(this.searchName).subscribe((response) => {
+      this.selectedBreweries = response
+      console.log('selectedBreweries/search by name: ', this.selectedBreweries)
 
-  // searchBreweryByName() {
-  //   return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&type=brewery&q=${this.searchName}`)
-  // }
-  //
-  //
-  //
-  // onNameChange(value) {
-  //   value = this.searchName.toLowerCase();
-  //   this.uniqueBrewByCountry = [];
-  //   this.getBreweriesByName()
-  //     .then(r => console.log('searchResult.data', this.searchResult.data))
-  // }
+    })
+  }
+
+  onNameChange(value) {
+    value = this.searchName.toLowerCase();
+    this.uniqueBrewByCountry = [];
+    this.searchBreweriesByName()
+  }
 
 
 }

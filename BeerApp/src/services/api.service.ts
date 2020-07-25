@@ -36,7 +36,15 @@ export class ApiService {
     let breweriesByCountry = [];
     return this.http.get(`api/locations/?countryIsoCode=${selectedValue}&order=breweryName&key=659d5c6b8f3d2447f090119e48202fdb`).pipe(map((data: ApiResponse) => {
       breweriesByCountry = data.data;
-      return breweriesByCountry
+      return breweriesByCountry;
+    }))
+  }
+
+  searchBreweryByName(searchName): Observable<any> {
+    let breweriesByName = [];
+    return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&type=brewery&q=${searchName}`).pipe(map((data: ApiResponse) => {
+      breweriesByName = data.data;
+      return breweriesByName;
     }))
   }
 }
