@@ -39,7 +39,7 @@ searchBeersByName() {
     this.searchBeersByName()
   }
   searchBeersByType() {
-    this.apiService.getBeersByName(this.page,this.searchType).subscribe((response) => {
+    this.apiService.getBeersByType(this.page,this.searchType).subscribe((response) => {
       console.log(response)
       this.selectedBeersNames = response
         .filter((beer) => {
