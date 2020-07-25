@@ -18,11 +18,15 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: "breweries/brewery/:breweryId",
+    component:BreweriesDetailsComponent,
+  },
+  {
     path: "beers",
     component:BeersComponent
   },
   {
-    path: "breweries/brewery/:breweryId",
+    path: "beers/beer/:beerId",
     component:BreweriesDetailsComponent,
   },
   {

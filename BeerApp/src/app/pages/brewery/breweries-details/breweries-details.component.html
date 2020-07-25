@@ -1,4 +1,4 @@
-<div class="single-brew-page" *ngIf="beersList.length>0; else loading">
+<div class="single-brew-page" *ngIf="breweryDetails else loading">
   <h1>{{breweryDetails.name}}</h1>
   <div *ngIf="breweryDetails.established; else noEstablished">
     <h5><b>Established: {{breweryDetails.established}}</b></h5>
@@ -24,28 +24,28 @@
       <p>{{breweryDetails.description}}</p>
     </div>
   </div>
-  <div class="beers">
-    <div class="beersCounter" *ngIf="beersList.length === 1;  else beersNumber">
+
+  <div class="beers" *ngIf="beersList; else noBeers">
+    <div class="beersCounter" *ngIf="beersList.length === 1;  else moreBeers">
       <h2>The brewery produces 1 beer: </h2>
     </div>
-    <ng-template #beersNumber>
+    <ng-template #moreBeers>
       <h2>The brewery produces <u>{{beersList.length}}</u> beers: </h2>
     </ng-template>
-    <div class="beers-box">
-      <ng-container *ngFor="let beer of beersList">
-        <div>
-          <h5>{{beer.name}}</h5>
-        </div>
-      </ng-container>
-    </div>
+  </div>
+  <ng-template #noBeers>
+    <h2>Sorry! The brewery doesn't produce beers yet.</h2>
+  </ng-template>
+  <div class="beers-box">
+    <ng-container *ngFor="let beer of beersList">
+      <div>
+        <h5>{{beer.name}}</h5>
+      </div>
+    </ng-container>
   </div>
 </div>
-
-<ng-template #loading><br><br><br>
-  <h3><b>Loading...</b></h3>
-  <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
-       alt="beer"/>
-</ng-template>
-
-
-
+  <ng-template #loading><br><br><br>
+    <h3><b>Loading...</b></h3>
+    <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+         alt="beer"/>
+  </ng-template>

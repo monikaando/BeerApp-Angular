@@ -55,15 +55,22 @@ export class ApiService {
       return breweriesById;
     }))
   }
+  //beers
   getBeersByBrewery(breweryId): Observable<any> {
     let beersByBrewery=[];
     return this.http.get(`api/brewery/${breweryId}/beers/?key=659d5c6b8f3d2447f090119e48202fdb`).pipe(map((data:ApiResponse)=>{
       beersByBrewery = data.data;
       return beersByBrewery;
     }))
-
   }
-
+  getBeersByName(page,name):Observable<any>{
+    let beersByName=[];
+    return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&p=${page}&type=beer&q=${name}`
+  ).pipe(map((data:ApiResponse)=>{
+      beersByName = data.data
+      return beersByName;
+    }))
+  }
 }
 
-//beers
+
