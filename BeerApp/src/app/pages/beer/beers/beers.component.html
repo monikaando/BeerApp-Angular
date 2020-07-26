@@ -27,6 +27,14 @@
     </div>
   </div>
   <button class="buttons-next-clear" (click)="getRandomBeer()">Random beer</button>
+  <div class="numberOfPages" *ngIf="numberOfPages >= 1 && page < numberOfPages + 1; else noPages">
+    <h5>page {{page}}/{{numberOfPages}}</h5>
+
+  </div>
+  <ng-template #noPages>
+    <p> No more beers here</p>
+  </ng-template>
+
   <div class="beer-box" *ngIf="selectedBeers.length === 0; else searchForBeers">
     <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
       <h3>{{randomBeer.name}}</h3>
@@ -34,7 +42,6 @@
     <h5>{{randomBeer.style.name}}</h5>
     <h6>{{randomBeer.style.description}}</h6>
   </div>
-
   <ng-template #searchForBeers>
     <div class="beers-box">
       <ng-container *ngFor="let item of selectedBeers">

@@ -12,7 +12,7 @@ export class BeersComponent implements OnInit {
   searchType: String = "";
   codes: any = [];
   selectedCode: String = "";
-  randomBeer :any;
+  randomBeer: any;
   selectedBeers: any = [];
   page: number = 1;
   numberOfPages = 0;
@@ -139,5 +139,17 @@ export class BeersComponent implements OnInit {
   }
   getNextPage() {
     this.page+=1
+    if (this.searchName.length > 0) {
+      this.searchBeersByName()
+    } else if (this.searchType.length > 0) (
+      this.searchBeersByType()
+    )
+    else if (this.selectedCode) {
+      this.getBeersByCountry()
+    }
+    this.selectedBeers=[];
+    this.randomBeer=[];
+    console.log('pages',this.page)
+    console.log('numberOfPages',this.numberOfPages)
   }
 }
