@@ -42,9 +42,9 @@ export class BreweriesComponent implements OnInit {
           return brewery.countryIsoCode
         })
 
-      console.log('codes/all country codes: ', this.codes)
+      //console.log('codes/all country codes: ', this.codes)
       this.countryCodes(response)
-      console.log('codes/unique country codes: ', this.codes)
+      //console.log('codes/unique country codes: ', this.codes)
     })
   }
 
@@ -56,13 +56,13 @@ export class BreweriesComponent implements OnInit {
   getBreweriesByCountry() {
     this.apiService.getBreweriesByCountry(this.selectedCode).subscribe((response) => {
       this.breweriesByCountry = response
-      console.log('breweriesByCountry/all breweries by country: ', this.uniqueBrewByCountry)
+      //console.log('breweriesByCountry/all breweries by country: ', this.uniqueBrewByCountry)
       this.uniqueBreweriesByCountry(response);
     })
   }
 
   onCountryChange(selectedValue: string) {
-    console.log('selected value: ', selectedValue)
+    //console.log('selected value: ', selectedValue)
     this.searchName = ''
     this.uniqueBrewByCountry = [];
     this.getBreweriesByCountry()
@@ -85,7 +85,7 @@ export class BreweriesComponent implements OnInit {
   searchBreweriesByName() {
     this.apiService.searchBreweryByName(this.searchName).subscribe((response) => {
       this.selectedBreweries = response
-      console.log('selectedBreweries/search by name: ', this.selectedBreweries)
+      //console.log('selectedBreweries/search by name: ', this.selectedBreweries)
     })
   }
 

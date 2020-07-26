@@ -59,13 +59,14 @@ export class ApiService {
 
   //beers
   getRandomBeer(): Observable<any> {
-    let randomBeer= {};
+    let randomBeer = {};
     return this.http.get("api/beer/random/?key=659d5c6b8f3d2447f090119e48202fdb"
     ).pipe(map((data: ApiResponse) => {
       randomBeer = data.data
       return randomBeer;
     }))
   }
+
   getBeersByBrewery(breweryId): Observable<any> {
     let beersByBrewery = [];
     return this.http.get(`api/brewery/${breweryId}/beers/?key=659d5c6b8f3d2447f090119e48202fdb`).pipe(map((data: ApiResponse) => {
@@ -101,6 +102,14 @@ export class ApiService {
     }))
   }
 
+  getBeerById(beerId): Observable<any> {
+    let beerById =[];
+    return this.http.get(`api/beer/${beerId}/?withBreweries=Y&key=659d5c6b8f3d2447f090119e48202fdb`)
+      .pipe(map((data: ApiResponse) => {
+        beerById = data.data
+        return beerById;
+      }))
+  }
 }
 
 

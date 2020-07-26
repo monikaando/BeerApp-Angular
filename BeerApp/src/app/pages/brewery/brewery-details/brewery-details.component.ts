@@ -4,10 +4,10 @@ import {ApiService} from "../../../../services/api.service";
 
 @Component({
   selector: 'app-breweries-details',
-  templateUrl: './breweries-details.component.html',
-  styleUrls: ['./breweries-details.component.scss']
+  templateUrl: './brewery-details.component.html',
+  styleUrls: ['./brewery-details.component.scss']
 })
-export class BreweriesDetailsComponent implements OnInit {
+export class BreweryDetailsComponent implements OnInit {
   breweryId: any = [];
   breweryDetails: any = [];
   beersList: any = [];
@@ -22,15 +22,15 @@ export class BreweriesDetailsComponent implements OnInit {
   ngOnInit() {
     this.getBreweryById()
     this.loadingInProgress=false;
-    console.log('breweryId',this.breweryId);
-    console.log('breweryDetails',this.breweryDetails)
-    console.log('beersList',this.beersList);
+    //console.log('breweryId',this.breweryId);
+    //console.log('breweryDetails',this.breweryDetails)
+    //console.log('beersList',this.beersList);
   }
 
   getBreweryById() {
     this.apiService.getBreweryById(this.breweryId).subscribe((response)=>{
       this.breweryDetails = response
-      console.log('breweryDetails',this.breweryDetails)
+      //console.log('breweryDetails',this.breweryDetails)
 
       this.getBeersByBrewery();
     })
@@ -38,7 +38,7 @@ export class BreweriesDetailsComponent implements OnInit {
   getBeersByBrewery(){
     this.apiService.getBeersByBrewery(this.breweryId).subscribe((response)=>{
       this.beersList = response;
-      console.log('beersList',this.beersList);
+      //console.log('beersList',this.beersList);
 
     })
   }

@@ -30,14 +30,17 @@ export class BeersComponent implements OnInit {
     this.apiService.getRandomBeer().subscribe((response) => {
       this.randomBeer = response;
       this.loadingInProgress = false;
-      console.log('selectedBeers/Random beer: ', this.randomBeer)
+      //console.log('selectedBeers/Random beer: ', this.randomBeer)
+      this.searchName = "";
+      this.searchType = "";
+      this.selectedBeers = [];
     })
 
   }
 
   searchBeersByName() {
     this.apiService.getBeersByName(this.page, this.searchName).subscribe((response) => {
-      console.log(response)
+      //console.log(response)
       this.selectedBeers = response
         .filter((beer) => {
           return beer.name.toLowerCase().includes(this.searchName.toLowerCase())
@@ -55,7 +58,7 @@ export class BeersComponent implements OnInit {
 
   searchBeersByType() {
     this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {
-      console.log(response)
+     // console.log(response)
       this.selectedBeers = response
         .filter((beer) => {
           return beer.name.toLowerCase().includes(this.searchType.toLowerCase())
@@ -63,7 +66,7 @@ export class BeersComponent implements OnInit {
         .map((beer) => {
           return beer
         })
-      console.log('selectedBeers: ', this.selectedBeers)
+      //ole.log('selectedBeers: ', this.selectedBeers)
     })
   }
 
@@ -78,14 +81,14 @@ export class BeersComponent implements OnInit {
           return brewery.countryIsoCode
         })
 
-      console.log('codes/all country codes: ', this.codes)
+      //console.log('codes/all country codes: ', this.codes)
       this.countryCodes(response)
-      console.log('codes/unique country codes: ', this.codes)
+     // console.log('codes/unique country codes: ', this.codes)
     })
   }
 
   countryCodes(response) {
-    const codesArray = response.map(item => item.countryIsoCode);
+   const codesArray = response.map(item => item.countryIsoCode);
     this.codes = [...new Set(codesArray)]
   }
 
@@ -99,7 +102,7 @@ export class BeersComponent implements OnInit {
 
   getBeersByCountry() {
     this.apiService.getBeersByCountry(this.page).subscribe((response) => {
-      console.log(response)
+     // console.log(response)
       this.selectedBeers = response
 
         .filter((beer) => {
@@ -108,12 +111,12 @@ export class BeersComponent implements OnInit {
         .map((beer) => {
           return beer
         })
-      console.log('selectedBeers Country: ', this.selectedBeers)
+     // console.log('selectedBeers Country: ', this.selectedBeers)
     })
   }
 
   onCountryChange(selectedValue: string) {
-    console.log('selected value: ', selectedValue);
+   // console.log('selected value: ', selectedValue);
     this.searchName = "";
     this.searchType = "";
     this.selectedBeers = [];

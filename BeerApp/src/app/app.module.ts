@@ -7,8 +7,9 @@ import { BreweriesComponent } from './pages/brewery/breweries/breweries.componen
 import { BeersComponent } from './pages/beer/beers/beers.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { BreweriesDetailsComponent } from './pages/brewery/breweries-details/breweries-details.component';
+import { BreweryDetailsComponent } from './pages/brewery/brewery-details/brewery-details.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { BeerDetailsComponent } from './pages/beer/beer-details/beer-details.component';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,9 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     HomeComponent,
     BreweriesComponent,
     BeersComponent,
-    BreweriesDetailsComponent,
+    BreweryDetailsComponent,
     PageNotFoundComponent,
+    BeerDetailsComponent,
   ],
   imports: [
     BrowserModule,

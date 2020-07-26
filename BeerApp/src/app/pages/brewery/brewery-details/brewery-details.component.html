@@ -29,7 +29,8 @@
     <div class="beersCounter" *ngIf="beersList.length === 1;  else moreBeers">
       <h2>The brewery produces 1 beer: </h2>
       <div class="beers-box">
-            <h5>{{beersList.name}}</h5>
+        <a href="beers/beer/{{beersList.id}}">
+          <h5>{{beersList.name}}</h5></a>
       </div>
     </div>
     <ng-template #moreBeers>
@@ -38,7 +39,8 @@
     <div class="beers-box">
       <ng-container *ngFor="let beer of beersList">
         <div>
-          <h5>{{beer.name}}</h5>
+          <a href="beers/beer/{{beer.id}}">
+            <h5>{{beer.name}}</h5></a>
         </div>
       </ng-container>
     </div>

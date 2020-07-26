@@ -7,7 +7,8 @@
     <label>
       <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
     </label>
-
+    <button (click)="getRandomBeer()">Random beer</button>
+    <h4>Choose a country:</h4>
     <div class="select">
       <select
         aria-label="country-code"
@@ -16,15 +17,15 @@
         value='{{this.selectedCode}}'
         (change)="onCountryChange($event.target.value)"
       >
-        <option value="" [defaultSelected]="true">Choose a country</option>
         <option *ngFor="let item of  codes" [ngValue]='item'>
           {{item}}
         </option>
       </select>
     </div>
   </div>
-  <div *ngIf="selectedBeers.length === 0; else searchForBeers">
+  <div class="beer-box" *ngIf="selectedBeers.length === 0; else searchForBeers">
     <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
+      <h3>Random beer:</h3>
       <h3>{{randomBeer.name}}</h3>
     </a>
     <h5>{{randomBeer.style.name}}</h5>
@@ -32,17 +33,11 @@
   </div>
 
   <ng-template #searchForBeers>
-    <div class="beers-box" *ngIf="selectedBeers; else loading2">
+    <div class="beers-box">
       <ng-container *ngFor="let item of selectedBeers">
-
         <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
       </ng-container>
     </div>
-    <ng-template #loading2>
-      <h3><b>Loading...</b></h3>
-      <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
-           alt="beer"/>
-    </ng-template>
 </ng-template>
 </div>
 

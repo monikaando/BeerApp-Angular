@@ -109,6 +109,25 @@
       border-radius: 5px;
     }
   }
+  .beer-box {
+    width: 50%;
+    margin: 0 10% 2% 15%;
+    text-align: left;
+    padding:0 10%;
+    @media screen
+    and (min-width: 300px)
+    and (max-width: 650px) {
+      width: 90%;
+    }
+    h5 {
+      margin: 0 0 3% 0;
+    }
+    a {
+      margin:0;
+      text-decoration: none;
+      color: rgb(39, 23, 23);
+    }
+  }
   .beers-box {
     column-count:2;
     -moz-column-count:2;

@@ -3,8 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
 import {BreweriesComponent} from "./pages/brewery/breweries/breweries.component";
 import {BeersComponent} from "./pages/beer/beers/beers.component";
-import {BreweriesDetailsComponent} from "./pages/brewery/breweries-details/breweries-details.component";
+import {
+  BreweryDetailsComponent
+} from "./pages/brewery/brewery-details/brewery-details.component";
 import {PageNotFoundComponent} from "./pages/page-not-found/page-not-found.component";
+import {BeerDetailsComponent} from "./pages/beer/beer-details/beer-details.component";
 
 
 const routes: Routes = [
@@ -19,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: "breweries/brewery/:breweryId",
-    component:BreweriesDetailsComponent,
+    component:BreweryDetailsComponent,
   },
   {
     path: "beers",
@@ -27,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: "beers/beer/:beerId",
-    component:BreweriesDetailsComponent,
+    component:BeerDetailsComponent,
   },
   {
     path: "**",
