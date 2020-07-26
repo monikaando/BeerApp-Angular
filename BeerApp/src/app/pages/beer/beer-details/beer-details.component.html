@@ -9,18 +9,18 @@
       <p><b>IBU:</b> {{beerDetails.style.ibuMin}} - {{beerDetails.style.ibuMax}}</p>
     </div>
   </div>
-  <div class="beer-img" *ngIf="beerDetails.labels.medium; else noImage">
+  <div class="beer-img" *ngIf="beerDetails.labels && beerDetails.style.description; else noImage">
  <img src="{{beerDetails.labels.medium}}" alt="beer-label"/>
   </div>
   <ng-template #noImage>
     <p> </p>
   </ng-template>
-  <div class="beer-description" *ngIf="beerDetails.style.description; else noDescription">
+  <div class="beer-description" >
 <p>{{beerDetails.style.description}}</p>
   </div>
-  <ng-templte #noDescription>
+  <ng-template #noDescription>
     <p> </p>
-  </ng-templte>
+  </ng-template>
 </div>
 <ng-template #loading><br><br><br>
   <h3><b>Loading...</b></h3>

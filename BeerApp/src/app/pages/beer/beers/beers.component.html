@@ -1,5 +1,9 @@
 <div class="search-page" *ngIf="!loadingInProgress; else loading">
   <h2>Search beers by name, type or country</h2>
+  <div class="buttons-next-clear">
+    <button (click)=clearInputFields()>Reset searching</button>
+    <button (click)=getNextPage()>Next page</button>
+  </div>
   <div class="search-boxes">
     <label>
       <input type="text" [(ngModel)]="searchName" placeholder="search by name" (change)="onNameChange($event)">
@@ -7,7 +11,6 @@
     <label>
       <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
     </label>
-    <button (click)="getRandomBeer()">Random beer</button>
     <h4>Choose a country:</h4>
     <div class="select">
       <select
@@ -23,9 +26,9 @@
       </select>
     </div>
   </div>
+  <button class="buttons-next-clear" (click)="getRandomBeer()">Random beer</button>
   <div class="beer-box" *ngIf="selectedBeers.length === 0; else searchForBeers">
     <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
-      <h3>Random beer:</h3>
       <h3>{{randomBeer.name}}</h3>
     </a>
     <h5>{{randomBeer.style.name}}</h5>

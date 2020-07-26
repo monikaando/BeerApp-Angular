@@ -15,6 +15,7 @@ export class BeersComponent implements OnInit {
   randomBeer :any;
   selectedBeers: any = [];
   page: number = 1;
+  numberOfPages = 0;
   loadingInProgress = true
 
   constructor(private apiService: ApiService) {
@@ -40,8 +41,10 @@ export class BeersComponent implements OnInit {
 
   searchBeersByName() {
     this.apiService.getBeersByName(this.page, this.searchName).subscribe((response) => {
-      //console.log(response)
-      this.selectedBeers = response
+      this.searchType=""
+      this.numberOfPages = response[0].numberOfPages;
+      console.log("numberOfPages",this.numberOfPages)
+      this.selectedBeers = response[0].data
         .filter((beer) => {
           return beer.name.toLowerCase().includes(this.searchName.toLowerCase())
         })
@@ -49,11 +52,13 @@ export class BeersComponent implements OnInit {
           return beer
         })
     })
+
   }
 
   onNameChange(value) {
+    this.searchType="";
     value = this.searchName;
-    this.searchBeersByName()
+    this.searchBeersByName();
   }
 
   searchBeersByType() {
@@ -96,8 +101,9 @@ export class BeersComponent implements OnInit {
 
 
   onTypeChange(value) {
+    this.searchName="";
     value = this.searchType;
-    this.searchBeersByType()
+    this.searchBeersByType();
   }
 
   getBeersByCountry() {
@@ -122,5 +128,16 @@ export class BeersComponent implements OnInit {
     this.selectedBeers = [];
     this.getBeersByCountry();
 
+  }
+  clearInputFields() {
+    this.searchName = "";
+    this.searchType = "";
+    this.selectedCode = "";
+    this.selectedBeers = [];
+    this.page = 1;
+    this.numberOfPages = 0;
+  }
+  getNextPage() {
+    this.page+=1
   }
 }
