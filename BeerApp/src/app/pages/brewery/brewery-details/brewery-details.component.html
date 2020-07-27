@@ -24,7 +24,11 @@
       <p>{{breweryDetails.description}}</p>
     </div>
   </div>
-
+  <label>
+  <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
+  </label>
+  <button (click)=clearInputFields()>Reset searching</button>
+  <div *ngIf="searchName ==''; else searchButtonClicked">
   <div class="beers" *ngIf="beersList; else noBeers">
     <div class="beersCounter" *ngIf="beersList.length === 1;  else moreBeers">
       <h2>The brewery produces 1 beer: </h2>
@@ -48,7 +52,19 @@
   <ng-template #noBeers>
     <h2>Sorry! The brewery doesn't produce beers yet.</h2>
   </ng-template>
-
+</div>
+  <ng-template #searchButtonClicked>
+    <div class="beers">
+    <div class="beers-box by-name">
+      <ng-container *ngFor="let beer of beersListByName">
+        <div>
+          <a href="beers/beer/{{beer.id}}">
+            <h5>{{beer.name}}</h5></a>
+        </div>
+      </ng-container>
+    </div>
+    </div>
+  </ng-template>
 </div>
   <ng-template #loading><br><br><br>
     <h3><b>Loading...</b></h3>

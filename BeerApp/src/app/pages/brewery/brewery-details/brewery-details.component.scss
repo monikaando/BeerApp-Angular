@@ -2,77 +2,115 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+margin-bottom:5%;
   h1 {
     margin: 2% 0 1% 0;
   }
+
   a {
-    color:rgb(39, 23, 23);
+    color: rgb(39, 23, 23);
     text-decoration: none;
   }
+
   h5 {
-    margin:0 0 2% 0;
+    margin: 0 0 2% 0;
   }
+
+  button {
+    margin: 1% 5% 0 5%;
+    width: 200px;
+    height: 25px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #ffb700ec;
+    border-color: rgba(255, 211, 99, 0.773);
+    color: #240603b9;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  input {
+    width: 140px;
+    margin-right: 6%;
+    border-radius: 5px;
+    height: 18px;
+    border: 1px solid #46464681;
+    padding-left: 5px;
+  }
+
   .brew-img-details {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     .brew-img {
       margin: 2% 0;
+
       img {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         border-radius: 15px;
       }
     }
+
     .brew-description {
       display: flex;
       flex-direction: column;
       text-align: justify;
       margin: 3% 5% 5% 5%;
       padding: 0 5%;
-      @media screen
-      and (min-width: 300px)
-      and (max-width: 650px) {
+      @media screen and (min-width: 300px) and (max-width: 650px) {
         margin: 3% 0 5% 0;
       }
+
       p {
-        margin:0 0 1% 0;
+        margin: 0 0 1% 0;
         line-height: 1.5em;
       }
     }
   }
+
   .beers {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 0 0 2% 0;
+
     .beersCounter {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 5%;
     }
+
     .beers-box {
-      column-count:2;
-      -moz-column-count:2;
-      -webkit-column-count:2;
+      column-count: 2;
+      -moz-column-count: 2;
+      -webkit-column-count: 2;
       width: 85%;
       margin: 0 0 2% 0;
       text-align: left;
-      @media screen
-      and (min-width: 300px)
-      and (max-width: 650px) {
+      @media screen and (min-width: 300px) and (max-width: 650px) {
         width: 90%;
       }
+
       h5 {
         margin: 0 0 3% 0;
       }
+
       a {
-        margin:0;
+        margin: 0;
       }
+    }
+
+    .by-name {
+      margin-top: 25px;
     }
   }
 }
+
 .loading {
-  margin-top:10%;
+  margin-top: 10%;
 }

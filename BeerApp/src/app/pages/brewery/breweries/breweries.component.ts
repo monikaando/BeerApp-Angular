@@ -34,6 +34,7 @@ export class BreweriesComponent implements OnInit {
 
   getLocations() {  //Get all country codes for a dropdown list
     this.apiService.getLocations().subscribe((response) => {
+      debugger
       this.codes = response
         .filter((brewery) => {
           return brewery.countryIsoCode !== undefined && brewery.countryIsoCode !== null
@@ -41,10 +42,7 @@ export class BreweriesComponent implements OnInit {
         .map((brewery) => {
           return brewery.countryIsoCode
         })
-
-      //console.log('codes/all country codes: ', this.codes)
-      this.countryCodes(response)
-      //console.log('codes/unique country codes: ', this.codes)
+      this.countryCodes(response);
     })
   }
 
@@ -85,7 +83,6 @@ export class BreweriesComponent implements OnInit {
   searchBreweriesByName() {
     this.apiService.searchBreweryByName(this.searchName).subscribe((response) => {
       this.selectedBreweries = response
-      //console.log('selectedBreweries/search by name: ', this.selectedBreweries)
     })
   }
 
@@ -94,6 +91,10 @@ export class BreweriesComponent implements OnInit {
     this.uniqueBrewByCountry = [];
     this.searchBreweriesByName()
   }
-
-
+  clearInputFields(){
+    this.selectedCode = "All countries";
+    this.searchName = "";
+    this.selectedBreweries=[];
+    this.getBreweries()
+  }
 }
