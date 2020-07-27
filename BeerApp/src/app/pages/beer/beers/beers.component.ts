@@ -130,6 +130,7 @@ export class BeersComponent implements OnInit {
 
   }
   clearInputFields() {
+    this.getRandomBeer();
     this.searchName = "";
     this.searchType = "";
     this.selectedCode = "";
