@@ -22,24 +22,17 @@ export class BreweryDetailsComponent implements OnInit {
   ngOnInit() {
     this.getBreweryById()
     this.loadingInProgress=false;
-    //console.log('breweryId',this.breweryId);
-    //console.log('breweryDetails',this.breweryDetails)
-    //console.log('beersList',this.beersList);
   }
 
   getBreweryById() {
     this.apiService.getBreweryById(this.breweryId).subscribe((response)=>{
       this.breweryDetails = response
-      //console.log('breweryDetails',this.breweryDetails)
-
       this.getBeersByBrewery();
     })
 }
   getBeersByBrewery(){
     this.apiService.getBeersByBrewery(this.breweryId).subscribe((response)=>{
       this.beersList = response;
-      //console.log('beersList',this.beersList);
-
     })
   }
 }

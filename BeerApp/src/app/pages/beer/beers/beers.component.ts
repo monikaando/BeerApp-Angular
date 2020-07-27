@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../../../services/api.service";
 
-
 @Component({
   selector: 'app-beers',
   templateUrl: './beers.component.html',
@@ -24,14 +23,12 @@ export class BeersComponent implements OnInit {
   ngOnInit(): void {
     this.getLocations();
     this.getRandomBeer();
-
   }
 
   getRandomBeer() {
     this.apiService.getRandomBeer().subscribe((response) => {
       this.randomBeer = response;
       this.loadingInProgress = false;
-      //console.log('selectedBeers/Random beer: ', this.randomBeer)
       this.searchName = "";
       this.searchType = "";
       this.selectedBeers = [];
@@ -43,7 +40,6 @@ export class BeersComponent implements OnInit {
     this.apiService.getBeersByName(this.page, this.searchName).subscribe((response) => {
       this.searchType=""
       this.numberOfPages = response[0].numberOfPages;
-      console.log("numberOfPages",this.numberOfPages)
       this.selectedBeers = response[0].data
         .filter((beer) => {
           return beer.name.toLowerCase().includes(this.searchName.toLowerCase())
@@ -52,7 +48,6 @@ export class BeersComponent implements OnInit {
           return beer
         })
     })
-
   }
 
   onNameChange(value) {
@@ -62,19 +57,25 @@ export class BeersComponent implements OnInit {
   }
 
   searchBeersByType() {
-    this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {
-     // console.log(response)
-      this.selectedBeers = response
+    this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {debugger
+      console.log('Response type',response)
+      this.searchName=""
+      this.numberOfPages = response[0].numberOfPages;
+      console.log("numberOfPages",this.numberOfPages)
+      this.selectedBeers = response[0].data
         .filter((beer) => {
-          return beer.name.toLowerCase().includes(this.searchType.toLowerCase())
-        })
+         return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase())})
         .map((beer) => {
           return beer
         })
-      //ole.log('selectedBeers: ', this.selectedBeers)
+      console.log('selectedBeers: ', this.selectedBeers)
     })
   }
-
+  onTypeChange(value) {
+    this.searchName="";
+    value = this.searchType;
+    this.searchBeersByType();
+  }
   //Repetitive code:Refractor later!
   getLocations() {  //Get all country codes for a dropdown list
     this.apiService.getLocations().subscribe((response) => {
@@ -85,10 +86,7 @@ export class BeersComponent implements OnInit {
         .map((brewery) => {
           return brewery.countryIsoCode
         })
-
-      //console.log('codes/all country codes: ', this.codes)
       this.countryCodes(response)
-     // console.log('codes/unique country codes: ', this.codes)
     })
   }
 
@@ -98,13 +96,6 @@ export class BeersComponent implements OnInit {
   }
 
   //end
-
-
-  onTypeChange(value) {
-    this.searchName="";
-    value = this.searchType;
-    this.searchBeersByType();
-  }
 
   getBeersByCountry() {
     this.apiService.getBeersByCountry(this.page).subscribe((response) => {
@@ -117,12 +108,10 @@ export class BeersComponent implements OnInit {
         .map((beer) => {
           return beer
         })
-     // console.log('selectedBeers Country: ', this.selectedBeers)
     })
   }
 
   onCountryChange(selectedValue: string) {
-   // console.log('selected value: ', selectedValue);
     this.searchName = "";
     this.searchType = "";
     this.selectedBeers = [];
