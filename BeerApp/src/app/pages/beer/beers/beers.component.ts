@@ -15,7 +15,7 @@ export class BeersComponent implements OnInit {
   selectedBeers: any = [];
   page: number = 1;
   numberOfPages = 0;
-  loadingInProgress = true
+  loadingInProgress = true;
 
   constructor(private apiService: ApiService) {
   }
@@ -32,6 +32,7 @@ export class BeersComponent implements OnInit {
       this.searchName = "";
       this.searchType = "";
       this.selectedBeers = [];
+      console.log('random:',this.randomBeer)
     })
 
   }
@@ -58,17 +59,14 @@ export class BeersComponent implements OnInit {
 
   searchBeersByType() {
     this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {debugger
-      console.log('Response type',response)
       this.searchName=""
       this.numberOfPages = response[0].numberOfPages;
-      console.log("numberOfPages",this.numberOfPages)
       this.selectedBeers = response[0].data
         .filter((beer) => {
          return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase())})
         .map((beer) => {
           return beer
         })
-      console.log('selectedBeers: ', this.selectedBeers)
     })
   }
   onTypeChange(value) {
@@ -89,25 +87,23 @@ export class BeersComponent implements OnInit {
       this.countryCodes(response)
     })
   }
-
   countryCodes(response) {
    const codesArray = response.map(item => item.countryIsoCode);
     this.codes = [...new Set(codesArray)]
   }
-
   //end
 
   getBeersByCountry() {
     this.apiService.getBeersByCountry(this.page).subscribe((response) => {
-     // console.log(response)
-      this.selectedBeers = response
-
+      this.numberOfPages = response[0].numberOfPages;
+      this.selectedBeers = response[0].data
         .filter((beer) => {
           return beer.breweries[0].locations[0].countryIsoCode.toLowerCase().includes(this.selectedCode.toLowerCase())
         })
         .map((beer) => {
           return beer
         })
+      console.log('selectedBeers: ', this.selectedBeers)
     })
   }
 

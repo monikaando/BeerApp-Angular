@@ -6,15 +6,15 @@
   </div>
   <div class="search-boxes">
     <div>
-    <label class="name">
-      <input  type="text" [(ngModel)]="searchName" placeholder="search by name" (change)="onNameChange($event)">
-    </label>
-    <label class="type">
-      <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
-    </label>
+      <label class="name">
+        <input type="text" [(ngModel)]="searchName" placeholder="search by name" (change)="onNameChange($event)">
+      </label>
+      <label class="type">
+        <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
+      </label>
     </div>
   </div>
-  <button class="button-random" (click)="getRandomBeer()">Random beer</button>
+
 
   <div class="select">
     <label>Choose a country</label>
@@ -41,16 +41,23 @@
       <p>No more beers here</p>
     </div>
     <ng-template #empty>
-      <p> </p>
+      <p></p>
     </ng-template>
   </ng-template>
+  <div class="beer-box" *ngIf="selectedBeers.length === 0 && !selectedCode; else searchForBeers">
 
-  <div class="beer-box" *ngIf="selectedBeers.length === 0; else searchForBeers">
-    <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
-      <h3>{{randomBeer.name}}</h3>
-    </a>
-    <h5>{{randomBeer.style.name}}</h5>
-    <h6>{{randomBeer.style.description}}</h6>
+    <div class="random-beer">
+      <button class="button-random" (click)="getRandomBeer()">Random beer</button>
+
+        <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
+          <h2>{{randomBeer.name}}</h2></a>
+          <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_200/v1595847368/PXl.WIDGETS/randombeer.png" alt="random beer">
+
+        <h4>Style: {{randomBeer.style.name}}</h4>
+        <h5>{{randomBeer.style.description}}</h5>
+      <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active"> <h4>Read more >></h4></a>
+
+      </div>
   </div>
   <ng-template #searchForBeers>
     <div class="beers-box">
@@ -59,9 +66,7 @@
       </ng-container>
     </div>
   </ng-template>
-
 </div>
-
 <ng-template #loading>
   <h3><b>Loading...</b></h3>
   <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"

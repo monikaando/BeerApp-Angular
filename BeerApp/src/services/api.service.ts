@@ -97,7 +97,7 @@ export class ApiService {
     let beersByCountry = [];
     return this.http.get(`api/beers/?withBreweries=Y&key=659d5c6b8f3d2447f090119e48202fdb&p=${page}`
     ).pipe(map((data: ApiResponse) => {
-      beersByCountry = data.data
+      beersByCountry.push(data);
       return beersByCountry;
     }))
   }
