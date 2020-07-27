@@ -32,14 +32,14 @@ export class BeersComponent implements OnInit {
       this.searchName = "";
       this.searchType = "";
       this.selectedBeers = [];
-      console.log('random:',this.randomBeer)
+      console.log('random:', this.randomBeer)
     })
 
   }
 
   searchBeersByName() {
     this.apiService.getBeersByName(this.page, this.searchName).subscribe((response) => {
-      this.searchType=""
+      this.searchType = ""
       this.numberOfPages = response[0].numberOfPages;
       this.selectedBeers = response[0].data
         .filter((beer) => {
@@ -52,28 +52,32 @@ export class BeersComponent implements OnInit {
   }
 
   onNameChange(value) {
-    this.searchType="";
+    this.searchType = "";
     value = this.searchName;
     this.searchBeersByName();
   }
 
   searchBeersByType() {
-    this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {debugger
-      this.searchName=""
+    this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {
+      debugger
+      this.searchName = ""
       this.numberOfPages = response[0].numberOfPages;
       this.selectedBeers = response[0].data
         .filter((beer) => {
-         return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase())})
+          return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase())
+        })
         .map((beer) => {
           return beer
         })
     })
   }
+
   onTypeChange(value) {
-    this.searchName="";
+    this.searchName = "";
     value = this.searchType;
     this.searchBeersByType();
   }
+
   //Repetitive code:Refractor later!
   getLocations() {  //Get all country codes for a dropdown list
     this.apiService.getLocations().subscribe((response) => {
@@ -87,10 +91,12 @@ export class BeersComponent implements OnInit {
       this.countryCodes(response)
     })
   }
+
   countryCodes(response) {
-   const codesArray = response.map(item => item.countryIsoCode);
+    const codesArray = response.map(item => item.countryIsoCode);
     this.codes = [...new Set(codesArray)]
   }
+
   //end
 
   getBeersByCountry() {
@@ -103,7 +109,7 @@ export class BeersComponent implements OnInit {
         .map((beer) => {
           return beer
         })
-      console.log('selectedBeers: ', this.selectedBeers)
+      this.loadingInProgress = false;
     })
   }
 
@@ -114,6 +120,7 @@ export class BeersComponent implements OnInit {
     this.getBeersByCountry();
 
   }
+
   clearInputFields() {
     this.getRandomBeer();
     this.searchName = "";
@@ -123,8 +130,9 @@ export class BeersComponent implements OnInit {
     this.page = 1;
     this.numberOfPages = 0;
   }
+
   getNextPage() {
-    this.page+=1
+    this.page += 1
     if (this.searchName.length > 0) {
       this.searchBeersByName()
     } else if (this.searchType.length > 0) (
@@ -133,9 +141,9 @@ export class BeersComponent implements OnInit {
     else if (this.selectedCode) {
       this.getBeersByCountry()
     }
-    this.selectedBeers=[];
-    this.randomBeer=[];
-    console.log('pages',this.page)
-    console.log('numberOfPages',this.numberOfPages)
+    this.selectedBeers = [];
+    this.randomBeer = [];
+    console.log('pages', this.page)
+    console.log('numberOfPages', this.numberOfPages)
   }
 }

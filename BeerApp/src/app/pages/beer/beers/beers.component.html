@@ -14,11 +14,8 @@
       </label>
     </div>
   </div>
-
-
   <div class="select">
     <label>Choose a country</label>
-
     <select
       aria-label="country-code"
       name="selectedCode"
@@ -31,10 +28,8 @@
       </option>
     </select>
   </div>
-
   <div class="numberOfPages" *ngIf="numberOfPages >= 1 && page < numberOfPages + 1; else noPages">
     <h5>page {{page}}/{{numberOfPages}}</h5>
-
   </div>
   <ng-template #noPages>
     <div *ngIf="page > numberOfPages && numberOfPages > 1; else empty">
@@ -45,26 +40,28 @@
     </ng-template>
   </ng-template>
   <div class="beer-box" *ngIf="selectedBeers.length === 0 && !selectedCode; else searchForBeers">
-
     <div class="random-beer">
       <button class="button-random" (click)="getRandomBeer()">Random beer</button>
-
-        <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
-          <h2>{{randomBeer.name}}</h2></a>
-          <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_200/v1595847368/PXl.WIDGETS/randombeer.png" alt="random beer">
-
-        <h4>Style: {{randomBeer.style.name}}</h4>
-        <h5>{{randomBeer.style.description}}</h5>
-      <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active"> <h4>Read more >></h4></a>
-
-      </div>
+      <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
+        <h2>{{randomBeer.name}}</h2></a>
+      <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_200/v1595847368/PXl.WIDGETS/randombeer.png"
+           alt="random beer">
+      <h4>Style: {{randomBeer.style.name}}</h4>
+      <h5>{{randomBeer.style.description}}</h5>
+      <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active"><h4>Read more >></h4></a>
+    </div>
   </div>
   <ng-template #searchForBeers>
-    <div class="beers-box">
+    <div class="beers-box" *ngIf="selectedBeers.length >0; else loading">
       <ng-container *ngFor="let item of selectedBeers">
         <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
       </ng-container>
     </div>
+    <ng-template #loading>
+      <h3><b>Loading...</b></h3>
+      <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+           alt="beer"/>
+    </ng-template>
   </ng-template>
 </div>
 <ng-template #loading>
