@@ -13,6 +13,7 @@ export class BreweryDetailsComponent implements OnInit {
   beersList: any = [];
   searchBeersList: any = [];
   beersTypes: any = [];
+  uniqueBeersTypes: any = [];
   searchName = '';
   searchType = '';
   page = 1;
@@ -55,33 +56,35 @@ export class BreweryDetailsComponent implements OnInit {
       });
   }
 
-  onNameChange(value): void {
+  onNameChange(event: Event): void {
     this.searchBeersList = [];
-    value = this.searchName;
     this.searchBeersByName();
   }
 
   searchBeersTypes(): void {
     this.beersList
+      .filter((beer) => {
+        return beer.style && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase());
+      })
       .map((beer) => {
         this.beersTypes.push(beer.style.name);
       });
+    this.uniqueBeersTypes = [...new Set(this.beersTypes)];
+    console.log('Unique beers',this.uniqueBeersTypes);
   }
 
   searchBeersByType(): void {
     this.beersList
       .filter((beer) => {
-        return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase());
+        return beer.style.name.includes(this.searchType);
       })
       .map((beer) => {
         this.searchBeersList.push(beer);
       });
-    console.log('searchBeersByType', this.searchBeersList);
   }
 
-  onTypeChange(value): void {
+  onTypeChange(event: Event): void {
     this.searchBeersList = [];
-    value = this.searchType;
     this.searchBeersByType();
   }
 

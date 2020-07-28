@@ -27,9 +27,6 @@
   <label>
     <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
   </label>
-  <label>
-    <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
-  </label>
   <div class="select">
     <select
       aria-label="country-code"
@@ -37,13 +34,13 @@
       [(ngModel)]="searchType"
       (change)="onTypeChange($event)"
     >
-      <option *ngFor="let item of beersTypes" [ngValue]='item'>
+      <option *ngFor="let item of uniqueBeersTypes" [ngValue]='item'>
         {{item}}
       </option>
     </select>
   </div>
   <button (click)=clearInputFields()>Reset searching</button>
-  <div *ngIf="searchName ==''; else searchButtonClicked">
+  <div *ngIf="searchName ==='' && searchType ===''; else searchAndFilterResults">
     <div class="beers" *ngIf="beersList; else noBeers">
       <div class="beersCounter" *ngIf="beersList.length === 1;  else moreBeers">
         <h2>The brewery produces 1 beer: </h2>
@@ -68,7 +65,7 @@
       <h2>Sorry! The brewery doesn't produce beers yet.</h2>
     </ng-template>
   </div>
-  <ng-template #searchButtonClicked>
+  <ng-template #searchAndFilterResults>
     <div class="beers">
       <div class="beers-box by-name">
         <ng-container *ngFor="let beer of searchBeersList">
