@@ -76,6 +76,7 @@ export class BreweriesComponent implements OnInit {
     value = this.searchName.toLowerCase();
     this.uniqueBrewByCountry = [];
     this.searchBreweriesByName();
+    this.selectedCode = 'All countries';
   }
 
   clearInputFields(): void {

@@ -9,6 +9,8 @@ import {ApiService} from '../../../../services/api.service';
 export class BeersComponent implements OnInit {
   searchName = '';
   searchType = '';
+  beersTypes: any = [];
+  uniqueBeersTypes: any = [];
   codes: any = [];
   selectedCode = '';
   randomBeer: any;
@@ -64,6 +66,18 @@ export class BeersComponent implements OnInit {
     this.searchBeersByName();
   }
 
+  // searchBeersTypes(): void {
+  //   this.beersTypes
+  //     .filter((beer) => {
+  //       return beer.style && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase());
+  //     })
+  //     .map((beer) => {
+  //       this.beersTypes.push(beer.style.name);
+  //     });
+  //   this.uniqueBeersTypes = [...new Set(this.beersTypes)];
+  //   console.log('Unique beers', this.uniqueBeersTypes);
+  // }
+
   searchBeersByType(): void {
     this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {
       this.searchName = '';
@@ -76,6 +90,7 @@ export class BeersComponent implements OnInit {
           return beer;
         });
     });
+    console.log('Beers types', this.beersTypes);
   }
 
   onTypeChange(value): void {
@@ -108,7 +123,7 @@ export class BeersComponent implements OnInit {
     });
   }
 
-  onCountryChange(event: Event): void{
+  onCountryChange(event: Event): void {
     this.searchName = '';
     this.searchType = '';
     this.selectedBeers = [];
@@ -132,11 +147,11 @@ export class BeersComponent implements OnInit {
     this.page += 1;
     if (this.searchName.length > 0) {
       this.searchBeersByName();
-    } else if (this.searchType.length > 0) { (
-      this.searchBeersByType()
-    );
- }
-    else if (this.selectedCode) {
+    } else if (this.searchType.length > 0) {
+      (
+        this.searchBeersByType()
+      );
+    } else if (this.selectedCode) {
       this.getBeersByCountry();
     }
     this.selectedBeers = [];

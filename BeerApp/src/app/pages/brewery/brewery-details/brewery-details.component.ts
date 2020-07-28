@@ -15,7 +15,7 @@ export class BreweryDetailsComponent implements OnInit {
   beersTypes: any = [];
   uniqueBeersTypes: any = [];
   searchName = '';
-  searchType = '';
+  filterType = '';
   page = 1;
   loadingInProgress = true;
 
@@ -64,19 +64,19 @@ export class BreweryDetailsComponent implements OnInit {
   searchBeersTypes(): void {
     this.beersList
       .filter((beer) => {
-        return beer.style && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase());
+        return beer.style && beer.style.name.toLowerCase().includes(this.filterType.toLowerCase());
       })
       .map((beer) => {
         this.beersTypes.push(beer.style.name);
       });
     this.uniqueBeersTypes = [...new Set(this.beersTypes)];
-    console.log('Unique beers',this.uniqueBeersTypes);
+    console.log('Unique beers', this.uniqueBeersTypes);
   }
 
   searchBeersByType(): void {
     this.beersList
       .filter((beer) => {
-        return beer.style.name.includes(this.searchType);
+        return beer.style.name.includes(this.filterType);
       })
       .map((beer) => {
         this.searchBeersList.push(beer);
@@ -90,7 +90,7 @@ export class BreweryDetailsComponent implements OnInit {
 
   clearInputFields(): void {
     this.searchName = '';
-    this.searchType = '';
+    this.filterType = '';
     this.searchBeersList = [];
     this.getBeersByBrewery();
   }

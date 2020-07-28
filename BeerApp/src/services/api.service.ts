@@ -69,36 +69,30 @@ export class ApiService {
 
   // beers
 
-  getBeersByBrewery(breweryId): Observable<any> {
-    let beersByBrewery = [];
-    return this.http.get(`api/brewery/${breweryId}/beers/?key=659d5c6b8f3d2447f090119e48202fdb`).pipe(map((data: ApiResponse) => {
-      beersByBrewery = data.data;
-      return beersByBrewery;
-    }));
-  }
-  getRandomBeer(): Observable<any> {
-    let randomBeer = {};
-    return this.http.get('api/beer/random/?key=659d5c6b8f3d2447f090119e48202fdb'
-    ).pipe(map((data: ApiResponse) => {
-      randomBeer = data.data;
-      return randomBeer;
-    }));
+  getBeersByBrewery(breweryId: string): Observable<any> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get(`api/brewery/${breweryId}/beers/?key=659d5c6b8f3d2447f090119e48202fdb`).pipe(map((response: ApiResponse) => response.data as Beer));
   }
 
-  getBeersByName(page, name): Observable<any> {
+  getRandomBeer(): Observable<any> {
+    return this.http.get('api/beer/random/?key=659d5c6b8f3d2447f090119e48202fdb'
+    ).pipe(map((response: ApiResponse) => response.data as Beer));
+  }
+
+  getBeersByName(page: number, name: string): Observable<any> {
     const beersByName = [];
     return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&p=${page}&type=beer&q=${name}`
-    ).pipe(map((data: ApiResponse) => {
-      beersByName.push(data);
+    ).pipe(map((response: ApiResponse) => {
+      beersByName.push(response);
       return beersByName;
     }));
   }
 
-  getBeersByType(page, type): Observable<any> {
+  getBeersByType(page: number, type: string): Observable<any> {
     const beersByType = [];
     return this.http.get(`api/search/?key=659d5c6b8f3d2447f090119e48202fdb&p=${page}&type=beer&q=${type}`
-    ).pipe(map((data: ApiResponse) => {
-      beersByType.push(data);
+    ).pipe(map((response: ApiResponse) => {
+      beersByType.push(response);
       return beersByType;
     }));
   }
@@ -106,8 +100,8 @@ export class ApiService {
   getBeersByCountry(page: number): Observable<any> {
     const beersByCountry = [];
     return this.http.get(`api/beers/?withBreweries=Y&key=659d5c6b8f3d2447f090119e48202fdb&p=${page}`
-    ).pipe(map((data: ApiResponse) => {
-      beersByCountry.push(data);
+    ).pipe(map((response: ApiResponse) => {
+      beersByCountry.push(response);
       return beersByCountry;
     }));
   }

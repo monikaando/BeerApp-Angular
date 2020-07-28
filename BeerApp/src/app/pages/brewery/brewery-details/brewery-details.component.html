@@ -4,7 +4,6 @@
     <h5><b>Established: {{breweryDetails.established}}</b></h5>
   </div>
   <ng-template #noEstablished>
-    <p></p>
   </ng-template>
   <div class="brew-img-details">
     <div class="brew-img" *ngIf="breweryDetails.images; else noImage">
@@ -15,23 +14,25 @@
       </div>
     </div>
     <ng-template #noImage>
-      <p></p>
     </ng-template>
     <a href="{{breweryDetails.website}}" rel="noopener noreferrer" target="_blank">
       <h4>{{breweryDetails.website}}</h4>
     </a>
     <div class="brew-description">
-      <p>{{breweryDetails.description}}</p>
+      <p>
+        {{breweryDetails.description}}
+      </p>
     </div>
   </div>
   <label>
     <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
   </label>
   <div class="select">
+    <label *ngIf="!filterType">Choose a beer by type</label>
     <select
       aria-label="country-code"
       name="selectedCode"
-      [(ngModel)]="searchType"
+      [(ngModel)]="filterType"
       (change)="onTypeChange($event)"
     >
       <option *ngFor="let item of uniqueBeersTypes" [ngValue]='item'>
@@ -40,7 +41,7 @@
     </select>
   </div>
   <button (click)=clearInputFields()>Reset searching</button>
-  <div *ngIf="searchName ==='' && searchType ===''; else searchAndFilterResults">
+  <div *ngIf="searchName ==='' && filterType ===''; else searchAndFilterResults">
     <div class="beers" *ngIf="beersList; else noBeers">
       <div class="beersCounter" *ngIf="beersList.length === 1;  else moreBeers">
         <h2>The brewery produces 1 beer: </h2>

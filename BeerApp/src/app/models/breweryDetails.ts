@@ -1,17 +1,17 @@
 interface Image {
-  squareMedium: String,
+  squareMedium: string;
 }
 
 interface Location {
-  countryIsoCode: String,
+  countryIsoCode: string;
 }
 
 export interface BreweryDetails {
-  id: number,
-  name: string,
-  description: string,
-  established: number,
-  images: Image,
-  website: string,
-  locations: Array<Location>
+  id: number;
+  name: string;
+  description: string;
+  established: number;
+  images: Image;
+  website: string;
+  locations: Array<Location>;
 }

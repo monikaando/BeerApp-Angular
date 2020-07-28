@@ -109,6 +109,66 @@ margin-bottom:5%;
       margin-top: 25px;
     }
   }
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #4b3535;
+    background-image: none;
+    padding: 0 0 0 1em;
+    color: #ffffff;
+  }
+
+  /* Remove IE arrow */
+  select::-ms-expand {
+    display: none;
+  }
+
+  /* Custom Select */
+  .select {
+    position: relative;
+    display: flex;
+    height: 30px;
+    line-height: 3;
+    background: #4b3535;
+    overflow: hidden;
+    border-radius: .25em;
+    margin: 3%;
+    label {
+      font-size: .9em;
+      line-height: 2.1;
+      padding-left: 10px;
+      color: #ffffff;
+    }
+    option {
+      color:#ffffff;
+    }
+  }
+
+
+  /* Arrow */
+  .select::after {
+    content: '\25BC';
+    position: absolute;
+    top: -0.5em;
+    right: 0;
+    padding: 0 1em;
+    background: #4b3535;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+  }
+
+  /* Transition */
+  .select:hover::after {
+    color: #f39c12;
+  }
 }
 
 .loading {
