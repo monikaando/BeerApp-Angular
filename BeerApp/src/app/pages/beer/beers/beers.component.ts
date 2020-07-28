@@ -58,6 +58,8 @@ export class BeersComponent implements OnInit {
 
   onNameChange(value): void {
     this.searchType = '';
+    this.page = 1;
+    this.numberOfPages = 0;
     value = this.searchName;
     this.searchBeersByName();
   }
@@ -78,6 +80,8 @@ export class BeersComponent implements OnInit {
 
   onTypeChange(value): void {
     this.searchName = '';
+    this.page = 1;
+    this.numberOfPages = 0;
     value = this.searchType;
     this.searchBeersByType();
   }
@@ -108,6 +112,8 @@ export class BeersComponent implements OnInit {
     this.searchName = '';
     this.searchType = '';
     this.selectedBeers = [];
+    this.page = 1;
+    this.numberOfPages = 0;
     this.getBeersByCountry();
 
   }
@@ -116,8 +122,8 @@ export class BeersComponent implements OnInit {
     this.getRandomBeer();
     this.searchName = '';
     this.searchType = '';
-    this.selectedCode = '';
     this.selectedBeers = [];
+    this.selectedCode = '';
     this.page = 1;
     this.numberOfPages = 0;
   }

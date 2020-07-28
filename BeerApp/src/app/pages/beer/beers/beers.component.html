@@ -2,7 +2,12 @@
   <h2>Search beers by name, type or country</h2>
   <div class="buttons-next-clear">
     <button (click)=clearInputFields()>Reset searching</button>
+    <div *ngIf="searchName !=='' || searchType !=='' || selectedCode !==''; else disabled">
     <button (click)=getNextPage()>Next page</button>
+    </div>
+    <ng-template  #disabled>
+      <button disabled style="background-color: darkgrey;   border: none">Next page</button>
+    </ng-template>
   </div>
 
   <div class="search-boxes">
@@ -17,7 +22,6 @@
   </div>
 
   <div class="select">
-
     <label *ngIf="!selectedCode">Choose a country</label>
     <select
       aria-label="country-code"
@@ -25,7 +29,6 @@
       [(ngModel)]="selectedCode"
       (change)="onCountryChange($event)"
     >
-
       <option [ngValue]='item' *ngFor="let item of  codes">
         {{item}}
       </option>
@@ -45,7 +48,7 @@
     </ng-template>
   </ng-template>
 
-  <div class="beer-box" *ngIf="selectedBeers.length === 0 && !selectedCode; else searchForBeers">
+  <div class="beer-box" *ngIf="selectedBeers.length === 0 && !selectedCode && page === 1; else searchForBeers">
     <div class="random-beer">
       <button class="button-random" (click)="getRandomBeer()">Random beer</button>
       <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
