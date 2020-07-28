@@ -25,52 +25,64 @@
     </div>
   </div>
   <label>
-  <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
+    <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
   </label>
   <label>
     <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
   </label>
+  <div class="select">
+    <select
+      aria-label="country-code"
+      name="selectedCode"
+      [(ngModel)]="searchType"
+      (change)="onTypeChange($event)"
+    >
+      <option *ngFor="let item of beersTypes" [ngValue]='item'>
+        {{item}}
+      </option>
+    </select>
+  </div>
   <button (click)=clearInputFields()>Reset searching</button>
   <div *ngIf="searchName ==''; else searchButtonClicked">
-  <div class="beers" *ngIf="beersList; else noBeers">
-    <div class="beersCounter" *ngIf="beersList.length === 1;  else moreBeers">
-      <h2>The brewery produces 1 beer: </h2>
+    <div class="beers" *ngIf="beersList; else noBeers">
+      <div class="beersCounter" *ngIf="beersList.length === 1;  else moreBeers">
+        <h2>The brewery produces 1 beer: </h2>
+        <div class="beers-box">
+          <a href="beers/beer/{{beersList.id}}">
+            <h5>{{beersList.name}}</h5></a>
+        </div>
+      </div>
+      <ng-template #moreBeers>
+        <h2>The brewery produces <u>{{beersList.length}}</u> beers: </h2>
+      </ng-template>
       <div class="beers-box">
-        <a href="beers/beer/{{beersList.id}}">
-          <h5>{{beersList.name}}</h5></a>
+        <ng-container *ngFor="let beer of beersList">
+          <div>
+            <a href="beers/beer/{{beer.id}}">
+              <h5>{{beer.name}}</h5></a>
+          </div>
+        </ng-container>
       </div>
     </div>
-    <ng-template #moreBeers>
-      <h2>The brewery produces <u>{{beersList.length}}</u> beers: </h2>
+    <ng-template #noBeers>
+      <h2>Sorry! The brewery doesn't produce beers yet.</h2>
     </ng-template>
-    <div class="beers-box">
-      <ng-container *ngFor="let beer of beersList">
-        <div>
-          <a href="beers/beer/{{beer.id}}">
-            <h5>{{beer.name}}</h5></a>
-        </div>
-      </ng-container>
-    </div>
   </div>
-  <ng-template #noBeers>
-    <h2>Sorry! The brewery doesn't produce beers yet.</h2>
-  </ng-template>
-</div>
   <ng-template #searchButtonClicked>
     <div class="beers">
-    <div class="beers-box by-name">
-      <ng-container *ngFor="let beer of beersListByName">
-        <div>
-          <a href="beers/beer/{{beer.id}}">
-            <h5>{{beer.name}}</h5></a>
-        </div>
-      </ng-container>
-    </div>
+      <div class="beers-box by-name">
+        <ng-container *ngFor="let beer of searchBeersList">
+          <div>
+            <a href="beers/beer/{{beer.id}}">
+              <h5>{{beer.name}}</h5></a>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </ng-template>
 </div>
-  <ng-template #loading><br><br><br>
-    <h3><b>Loading...</b></h3>
-    <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
-         alt="beer"/>
-  </ng-template>
+<ng-template #loading><br><br><br>
+  <h3><b>Loading...</b></h3>
+  <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+       alt="beer"/>
+</ng-template>
