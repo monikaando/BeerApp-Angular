@@ -12,10 +12,10 @@ export class BreweryDetailsComponent implements OnInit {
   breweryDetails: any = [];
   beersList: any = [];
   beersListByName: any = [];
-  loadingInProgress=true;
+  loadingInProgress = true;
   searchName: String = "";
-  page=1;
-
+  searchType: String = "";
+  page = 1;
 
   constructor(private apiService: ApiService,
               private router: Router,
@@ -23,41 +23,64 @@ export class BreweryDetailsComponent implements OnInit {
 
     this.breweryId = this.route.snapshot.paramMap.get('breweryId'); //get id parameter
   }
+
   ngOnInit() {
     this.getBreweryById()
-    this.loadingInProgress=false;
-    console.log('beersListByName',this.beersListByName)
+    this.loadingInProgress = false;
+    console.log('beersListByName', this.beersListByName)
   }
 
   getBreweryById() {
-    this.apiService.getBreweryById(this.breweryId).subscribe((response)=>{
+    this.apiService.getBreweryById(this.breweryId).subscribe((response) => {
       this.breweryDetails = response
       this.getBeersByBrewery();
-      console.log('breweryDetails ',this.breweryDetails )
+      console.log('breweryDetails ', this.breweryDetails)
     })
-}
-  getBeersByBrewery(){
-    this.apiService.getBeersByBrewery(this.breweryId).subscribe((response)=>{
+  }
+
+  getBeersByBrewery() {
+    this.apiService.getBeersByBrewery(this.breweryId).subscribe((response) => {
       this.beersList = response;
     })
   }
-  onNameChange(value){
-    this.beersListByName=[];
+
+  searchBeersByName() {
+    this.beersList
+      .filter((beer) => {
+        return beer.name.toLowerCase().includes(this.searchName.toLowerCase())
+      })
+      .map((beer) => {
+        this.beersListByName.push(beer)
+      })
+  }
+
+  onNameChange(value) {
+    this.beersListByName = [];
+
     value = this.searchName
     this.searchBeersByName();
   }
-  searchBeersByName() {
-      this.beersList
-        .filter((beer) => {
-          return beer.name.toLowerCase().includes(this.searchName.toLowerCase())
-        })
-        .map((beer) => {
-          this.beersListByName.push(beer)
-        })
+
+  searchBeersByType() { debugger
+    this.beersList
+      .filter((beer) => {
+        return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase())
+      })
+      .map((beer) => {
+        this.beersListByName.push(beer)
+      })
   }
-  clearInputFields(){
-    this.searchName ="";
-    this.beersListByName=[];
+
+  onTypeChange(value) {
+    this.beersListByName = [];
+    value = this.searchType
+    this.searchBeersByType();
+  }
+
+  clearInputFields() {
+    this.searchName = "";
+    this.searchType ="";
+    this.beersListByName = [];
     this.getBeersByBrewery()
   }
 }

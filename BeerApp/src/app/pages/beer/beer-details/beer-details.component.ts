@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./beer-details.component.scss']
 })
 export class BeerDetailsComponent implements OnInit {
-  beerId: String = "";
+  beerId: string = "";
   beerDetails: any;
   loadingInProgress = true;
 

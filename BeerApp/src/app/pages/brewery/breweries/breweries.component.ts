@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from "../../../../services/api.service";
-import {Brewery} from "../../../models/brewery";
+import {ApiService} from '../../../../services/api.service';
+import {BreweryDetails} from '../../../models/breweryDetails';
 
 @Component({
   selector: 'app-breweries',
@@ -9,92 +9,79 @@ import {Brewery} from "../../../models/brewery";
 })
 
 export class BreweriesComponent implements OnInit {
-  data: Array<Brewery>;
-  selectedBreweries: Array<Brewery>
+  data: Array<BreweryDetails>;
+  selectedBreweries: Array<BreweryDetails>;
   codes: any = [];
-  selectedCode = "All countries";
+  selectedCode = 'All countries';
   breweriesByCountry: any = [];
   uniqueBrewByCountry: any = [];
-  searchName: String = "";
+  searchName = '';
 
   constructor(private apiService: ApiService) {
   }
 
-  ngOnInit() {
-    this.getBreweries()
-    this.getLocations()
+  ngOnInit(): void {
+    this.getBreweries();
+    this.getLocations();
   }
 
-  getBreweries() {
+  getBreweries(): void {
     this.apiService.getBreweries().subscribe((response) => {
-      this.data = response
-      this.selectedBreweries = this.data
-    })
+      this.data = response;
+      this.selectedBreweries = this.data;
+    });
   }
 
-  getLocations() {  //Get all country codes for a dropdown list
+// Get all country codes for a dropdown list
+  getLocations(): void {
     this.apiService.getLocations().subscribe((response) => {
-      debugger
-      this.codes = response
-        .filter((brewery) => {
-          return brewery.countryIsoCode !== undefined && brewery.countryIsoCode !== null
-        })
-        .map((brewery) => {
-          return brewery.countryIsoCode
-        })
-      this.countryCodes(response);
-    })
+      this.codes = response;
+    });
   }
 
-  countryCodes(response) {
-    const codesArray = response.map(item => item.countryIsoCode);
-    this.codes = [...new Set(codesArray)]
-  }
-
-  getBreweriesByCountry() {
+  getBreweriesByCountry(): void {
     this.apiService.getBreweriesByCountry(this.selectedCode).subscribe((response) => {
-      this.breweriesByCountry = response
-      //console.log('breweriesByCountry/all breweries by country: ', this.uniqueBrewByCountry)
+      this.breweriesByCountry = response;
       this.uniqueBreweriesByCountry(response);
-    })
+    });
   }
 
-  onCountryChange(selectedValue: string) {
-    //console.log('selected value: ', selectedValue)
-    this.searchName = ''
+  onCountryChange(event: Event): void {
+    this.searchName = '';
     this.uniqueBrewByCountry = [];
-    this.getBreweriesByCountry()
+    this.getBreweriesByCountry();
   }
 
-  uniqueBreweriesByCountry(response) {
-    let uniqueObject = {};
-    let data = response
-    for (let i in data) {
+  uniqueBreweriesByCountry(response): void {
+    const uniqueObject = {};
+    const data = response;
+    for (const i in data) {
       if (data.hasOwnProperty(i)) {
         const objId = data[i].brewery['name'];
         uniqueObject[objId] = data[i];
       }
     }
-    for (let i in uniqueObject) {
+    for (const i in uniqueObject) {
       this.uniqueBrewByCountry.push(uniqueObject[i]);
     }
   }
 
-  searchBreweriesByName() {
+  searchBreweriesByName(): void {
     this.apiService.searchBreweryByName(this.searchName).subscribe((response) => {
-      this.selectedBreweries = response
-    })
+      this.selectedBreweries = response;
+    });
   }
 
-  onNameChange(value) {
+  onNameChange(value): void {
     value = this.searchName.toLowerCase();
     this.uniqueBrewByCountry = [];
-    this.searchBreweriesByName()
+    this.searchBreweriesByName();
   }
-  clearInputFields(){
-    this.selectedCode = "All countries";
-    this.searchName = "";
-    this.selectedBreweries=[];
-    this.getBreweries()
+
+  clearInputFields(): void {
+    this.selectedCode = 'All countries';
+    this.searchName = '';
+    this.selectedBreweries = [];
+    this.getBreweries();
   }
 }

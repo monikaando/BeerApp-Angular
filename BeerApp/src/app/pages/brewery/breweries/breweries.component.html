@@ -3,17 +3,15 @@
   <label>
     <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
   </label>
-    <button (click)=clearInputFields()>Reset searching</button>
-
+  <button (click)=clearInputFields()>Reset searching</button>
   <div class="select">
     <select
       aria-label="country-code"
       name="selectedCode"
       [(ngModel)]="selectedCode"
-      value='{{this.selectedCode}}'
-      (change)="onCountryChange($event.target.value)"
+      (change)="onCountryChange($event)"
     >
-      <option [ngValue]="">All countries</option>
+      <option [ngValue]="'All countries'">All countries</option>
       <option *ngFor="let item of codes" [ngValue]='item'>
         {{item}}
       </option>

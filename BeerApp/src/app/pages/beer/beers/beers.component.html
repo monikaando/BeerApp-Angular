@@ -4,6 +4,7 @@
     <button (click)=clearInputFields()>Reset searching</button>
     <button (click)=getNextPage()>Next page</button>
   </div>
+
   <div class="search-boxes">
     <div>
       <label class="name">
@@ -14,23 +15,27 @@
       </label>
     </div>
   </div>
+
   <div class="select">
-    <label>Choose a country</label>
+
+    <label *ngIf="!selectedCode">Choose a country</label>
     <select
       aria-label="country-code"
       name="selectedCode"
       [(ngModel)]="selectedCode"
-      value='{{this.selectedCode}}'
-      (change)="onCountryChange($event.target.value)"
+      (change)="onCountryChange($event)"
     >
-      <option *ngFor="let item of  codes" [ngValue]='item'>
+
+      <option [ngValue]='item' *ngFor="let item of  codes">
         {{item}}
       </option>
     </select>
   </div>
+
   <div class="numberOfPages" *ngIf="numberOfPages >= 1 && page < numberOfPages + 1; else noPages">
     <h5>page {{page}}/{{numberOfPages}}</h5>
   </div>
+
   <ng-template #noPages>
     <div *ngIf="page > numberOfPages && numberOfPages > 1; else empty">
       <p>No more beers here</p>
@@ -39,18 +44,26 @@
       <p></p>
     </ng-template>
   </ng-template>
+
   <div class="beer-box" *ngIf="selectedBeers.length === 0 && !selectedCode; else searchForBeers">
     <div class="random-beer">
       <button class="button-random" (click)="getRandomBeer()">Random beer</button>
       <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
         <h2>{{randomBeer.name}}</h2></a>
-      <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_200/v1595847368/PXl.WIDGETS/randombeer.png"
-           alt="random beer">
+      <div *ngIf="randomBeer.labels; else noLabel">
+      <img src="{{randomBeer.labels.icon}}"
+           alt="{{randomBeer.name}}">
+      </div>
+      <ng-template #noLabel>
+        <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_200/v1595847368/PXl.WIDGETS/randombeer.png"
+             alt="{{randomBeer.name}}">
+      </ng-template>
       <h4>Style: {{randomBeer.style.name}}</h4>
       <h5>{{randomBeer.style.description}}</h5>
       <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active"><h4>Read more >></h4></a>
     </div>
   </div>
+
   <ng-template #searchForBeers>
     <div class="beers-box" *ngIf="selectedBeers.length >0; else loading">
       <ng-container *ngFor="let item of selectedBeers">
@@ -64,6 +77,7 @@
     </ng-template>
   </ng-template>
 </div>
+
 <ng-template #loading>
   <h3><b>Loading...</b></h3>
   <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"

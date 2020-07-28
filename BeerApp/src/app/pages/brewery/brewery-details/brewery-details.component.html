@@ -27,6 +27,9 @@
   <label>
   <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
   </label>
+  <label>
+    <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
+  </label>
   <button (click)=clearInputFields()>Reset searching</button>
   <div *ngIf="searchName ==''; else searchButtonClicked">
   <div class="beers" *ngIf="beersList; else noBeers">

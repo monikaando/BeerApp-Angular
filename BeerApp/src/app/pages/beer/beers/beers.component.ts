@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from "../../../../services/api.service";
+import {ApiService} from '../../../../services/api.service';
 
 @Component({
   selector: 'app-beers',
@@ -7,13 +7,14 @@ import {ApiService} from "../../../../services/api.service";
   styleUrls: ['./beers.component.scss']
 })
 export class BeersComponent implements OnInit {
-  searchName: String = "";
-  searchType: String = "";
+  searchName = '';
+  searchType = '';
   codes: any = [];
-  selectedCode: String = "";
+  selectedCode = '';
   randomBeer: any;
+  randomBeerById = '';
   selectedBeers: any = [];
-  page: number = 1;
+  page = 1;
   numberOfPages = 0;
   loadingInProgress = true;
 
@@ -25,125 +26,116 @@ export class BeersComponent implements OnInit {
     this.getRandomBeer();
   }
 
-  getRandomBeer() {
+  getRandomBeer(): void {
     this.apiService.getRandomBeer().subscribe((response) => {
       this.randomBeer = response;
+      this.randomBeerById = response.id;
       this.loadingInProgress = false;
-      this.searchName = "";
-      this.searchType = "";
+      this.searchName = '';
+      this.searchType = '';
       this.selectedBeers = [];
-      console.log('random:', this.randomBeer)
-    })
 
+      this.apiService.getBeerById(this.randomBeerById).subscribe((resp) => {
+        this.randomBeer = resp;
+      });
+    });
   }
 
-  searchBeersByName() {
+  searchBeersByName(): void {
     this.apiService.getBeersByName(this.page, this.searchName).subscribe((response) => {
-      this.searchType = ""
+      console.log(response);
+      this.searchType = '';
       this.numberOfPages = response[0].numberOfPages;
       this.selectedBeers = response[0].data
         .filter((beer) => {
-          return beer.name.toLowerCase().includes(this.searchName.toLowerCase())
+          return beer.name.toLowerCase().includes(this.searchName.toLowerCase());
         })
         .map((beer) => {
-          return beer
-        })
-    })
+          return beer;
+        });
+    });
   }
 
-  onNameChange(value) {
-    this.searchType = "";
+  onNameChange(value): void {
+    this.searchType = '';
     value = this.searchName;
     this.searchBeersByName();
   }
 
-  searchBeersByType() {
+  searchBeersByType(): void {
     this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {
-      debugger
-      this.searchName = ""
+      this.searchName = '';
       this.numberOfPages = response[0].numberOfPages;
       this.selectedBeers = response[0].data
         .filter((beer) => {
-          return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase())
+          return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase());
         })
         .map((beer) => {
-          return beer
-        })
-    })
+          return beer;
+        });
+    });
   }
 
-  onTypeChange(value) {
-    this.searchName = "";
+  onTypeChange(value): void {
+    this.searchName = '';
     value = this.searchType;
     this.searchBeersByType();
   }
 
-  //Repetitive code:Refractor later!
-  getLocations() {  //Get all country codes for a dropdown list
+// Get all country codes for a dropdown list
+  getLocations(): void {
     this.apiService.getLocations().subscribe((response) => {
-      this.codes = response
-        .filter((brewery) => {
-          return brewery.countryIsoCode !== undefined && brewery.countryIsoCode !== null
-        })
-        .map((brewery) => {
-          return brewery.countryIsoCode
-        })
-      this.countryCodes(response)
-    })
+      this.codes = response;
+    });
   }
 
-  countryCodes(response) {
-    const codesArray = response.map(item => item.countryIsoCode);
-    this.codes = [...new Set(codesArray)]
-  }
-
-  //end
-
-  getBeersByCountry() {
+  getBeersByCountry(): void {
     this.apiService.getBeersByCountry(this.page).subscribe((response) => {
+      console.log(response);
       this.numberOfPages = response[0].numberOfPages;
       this.selectedBeers = response[0].data
         .filter((beer) => {
-          return beer.breweries[0].locations[0].countryIsoCode.toLowerCase().includes(this.selectedCode.toLowerCase())
+          return beer.breweries[0].locations[0].countryIsoCode.toLowerCase().includes(this.selectedCode.toLowerCase());
         })
         .map((beer) => {
-          return beer
-        })
+          return beer;
+        });
       this.loadingInProgress = false;
-    })
+    });
   }
 
-  onCountryChange(selectedValue: string) {
-    this.searchName = "";
-    this.searchType = "";
+  onCountryChange(event: Event): void{
+    this.searchName = '';
+    this.searchType = '';
     this.selectedBeers = [];
     this.getBeersByCountry();
 
   }
 
-  clearInputFields() {
+  clearInputFields(): void {
     this.getRandomBeer();
-    this.searchName = "";
-    this.searchType = "";
-    this.selectedCode = "";
+    this.searchName = '';
+    this.searchType = '';
+    this.selectedCode = '';
     this.selectedBeers = [];
     this.page = 1;
     this.numberOfPages = 0;
   }
 
-  getNextPage() {
-    this.page += 1
+  getNextPage(): void {
+    this.page += 1;
     if (this.searchName.length > 0) {
-      this.searchBeersByName()
-    } else if (this.searchType.length > 0) (
+      this.searchBeersByName();
+    } else if (this.searchType.length > 0) { (
       this.searchBeersByType()
-    )
+    );
+ }
     else if (this.selectedCode) {
-      this.getBeersByCountry()
+      this.getBeersByCountry();
     }
     this.selectedBeers = [];
     this.randomBeer = [];
-    console.log('pages', this.page)
-    console.log('numberOfPages', this.numberOfPages)
+    console.log('pages', this.page);
+    console.log('numberOfPages', this.numberOfPages);
   }
 }
