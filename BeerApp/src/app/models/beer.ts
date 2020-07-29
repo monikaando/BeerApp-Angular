@@ -1,5 +1,8 @@
-import {BreweryDetails} from "./breweryDetails";
+import {BeerDetails} from './beerDetails';
 
 export interface Beer {
-  breweries: Array<BreweryDetails>,
+  currentPage: number;
+  numberOfPages: number;
+  totalResults: number;
+  brewery: BeerDetails;
 }

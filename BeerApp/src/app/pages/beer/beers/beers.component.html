@@ -2,11 +2,11 @@
   <h2>Search beers by name, type or country</h2>
   <div class="buttons-next-clear">
     <button (click)=clearInputFields()>Reset searching</button>
-    <div *ngIf="searchName !=='' || searchType !=='' || selectedCode !==''; else disabled">
-    <button (click)=getNextPage()>Next page</button>
+    <div *ngIf="!onNameChange || !onTypeChange || selectedCode !=='' || page < numberOfPages; else disabled">
+      <button (click)=getNextPage()>Next page</button>
     </div>
-    <ng-template  #disabled>
-      <button disabled style="background-color: darkgrey;   border: none">Next page</button>
+    <ng-template #disabled>
+      <button disabled style="background-color: darkgrey; border: none">Next page</button>
     </ng-template>
   </div>
 
@@ -54,15 +54,17 @@
       <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
         <h2>{{randomBeer.name}}</h2></a>
       <div *ngIf="randomBeer.labels; else noLabel">
-      <img src="{{randomBeer.labels.icon}}"
-           alt="{{randomBeer.name}}">
+        <img src="{{randomBeer.labels.icon}}"
+             alt="{{randomBeer.name}}">
       </div>
       <ng-template #noLabel>
         <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_200/v1595847368/PXl.WIDGETS/randombeer.png"
              alt="{{randomBeer.name}}">
       </ng-template>
-      <h4>Style: {{randomBeer.style.name}}</h4>
-      <h5>{{randomBeer.style.description}}</h5>
+      <div *ngIf="randomBeer.style">
+        <h4>Style: {{randomBeer.style.name}}</h4>
+        <h5>{{randomBeer.style.description}}</h5>
+      </div>
       <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active"><h4>Read more >></h4></a>
     </div>
   </div>

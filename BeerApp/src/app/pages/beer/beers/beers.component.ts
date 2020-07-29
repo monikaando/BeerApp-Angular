@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../../../services/api.service';
+import {Beer} from '../../../models/beer';
 
 @Component({
   selector: 'app-beers',
@@ -36,7 +37,6 @@ export class BeersComponent implements OnInit {
       this.searchName = '';
       this.searchType = '';
       this.selectedBeers = [];
-
       this.apiService.getBeerById(this.randomBeerById).subscribe((resp) => {
         this.randomBeer = resp;
       });
@@ -47,22 +47,21 @@ export class BeersComponent implements OnInit {
     this.apiService.getBeersByName(this.page, this.searchName).subscribe((response) => {
       console.log(response);
       this.searchType = '';
-      this.numberOfPages = response[0].numberOfPages;
-      this.selectedBeers = response[0].data
+      this.numberOfPages = response.numberOfPages;
+      if (response.data){
+      this.selectedBeers = response.data
         .filter((beer) => {
           return beer.name.toLowerCase().includes(this.searchName.toLowerCase());
-        })
-        .map((beer) => {
-          return beer;
         });
+      }
     });
   }
 
-  onNameChange(value): void {
+  onNameChange(value: string): void {
+    // this.value = this.searchName;
     this.searchType = '';
     this.page = 1;
     this.numberOfPages = 0;
-    value = this.searchName;
     this.searchBeersByName();
   }
 
@@ -81,16 +80,15 @@ export class BeersComponent implements OnInit {
   searchBeersByType(): void {
     this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {
       this.searchName = '';
-      this.numberOfPages = response[0].numberOfPages;
-      this.selectedBeers = response[0].data
+      this.numberOfPages = response.numberOfPages;
+      if (response.data){
+      this.selectedBeers = response.data
         .filter((beer) => {
-          return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase());
-        })
-        .map((beer) => {
-          return beer;
+          return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase()
+            .includes(this.searchType.toLowerCase());
         });
+      }
     });
-    console.log('Beers types', this.beersTypes);
   }
 
   onTypeChange(value): void {
@@ -111,13 +109,10 @@ export class BeersComponent implements OnInit {
   getBeersByCountry(): void {
     this.apiService.getBeersByCountry(this.page).subscribe((response) => {
       console.log(response);
-      this.numberOfPages = response[0].numberOfPages;
-      this.selectedBeers = response[0].data
+      this.numberOfPages = response.numberOfPages;
+      this.selectedBeers = response.data
         .filter((beer) => {
           return beer.breweries[0].locations[0].countryIsoCode.toLowerCase().includes(this.selectedCode.toLowerCase());
-        })
-        .map((beer) => {
-          return beer;
         });
       this.loadingInProgress = false;
     });

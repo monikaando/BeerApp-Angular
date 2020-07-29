@@ -13,5 +13,6 @@ export interface BreweryDetails {
   established: number;
   images: Image;
   website: string;
+  countryIsoCode: string;
   locations: Array<Location>;
 }

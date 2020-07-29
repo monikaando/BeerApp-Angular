@@ -9,8 +9,8 @@ import {BreweryDetails} from '../../../models/breweryDetails';
 })
 
 export class BreweriesComponent implements OnInit {
-  data: Array<BreweryDetails>;
-  selectedBreweries: Array<BreweryDetails>;
+  data: BreweryDetails;
+  selectedBreweries: any = [];
   codes: any = [];
   selectedCode = 'All countries';
   breweriesByCountry: any = [];
