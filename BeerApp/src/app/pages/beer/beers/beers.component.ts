@@ -9,13 +9,12 @@ import {BeerDetails} from '../../../models/beerDetails';
 })
 export class BeersComponent implements OnInit {
   searchName: string;
-  searchType: string;
   selectedType: any;
   selectedCode: string;
   randomBeerById: string;
   randomBeer: BeerDetails;
   selectedBeers: BeerDetails[];
-  selectedBeersByType: any;
+  selectedBeersByType: any = [];
   beersTypes: any = [];
   codes: any = [];
   page = 1;
@@ -26,8 +25,8 @@ export class BeersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getLocations();
     this.getBeersTypes();
+    this.getLocations();
     this.getRandomBeer();
   }
 
@@ -37,7 +36,7 @@ export class BeersComponent implements OnInit {
       this.randomBeerById = response.id;
       this.loadingInProgress = false;
       this.searchName = null;
-      this.searchType = null;
+      this.selectedType = null;
       this.selectedBeers = [];
       this.apiService.getBeerById(this.randomBeerById).subscribe((resp) => {
         this.randomBeer = resp;
@@ -47,8 +46,7 @@ export class BeersComponent implements OnInit {
 
   searchBeersByName(): void {
     this.apiService.getBeersByName(this.page, this.searchName).subscribe((response) => {
-      console.log(response);
-      this.searchType = null;
+      this.selectedType = null;
       this.numberOfPages = response.numberOfPages;
       if (response.data) {
         this.selectedBeers = response.data
@@ -60,7 +58,7 @@ export class BeersComponent implements OnInit {
   }
 
   onNameChange(): void {
-    this.searchType = null;
+    this.selectedType = null;
     this.page = 1;
     this.numberOfPages = 0;
     this.searchBeersByName();
@@ -73,24 +71,22 @@ export class BeersComponent implements OnInit {
           this.beersTypes.push(beer);
         });
     });
-    console.log('beersTypes', this.beersTypes);
-    console.log('selectedBeers', this.selectedBeers);
   }
 
   searchBeersByType(): void {
     this.apiService.getBeersByType(this.selectedType.id).subscribe((response) => {
       this.searchName = null;
+      this.selectedBeers = response.data;
       this.selectedBeersByType = response;
-      console.log('searchBeersByType', response);
     });
   }
 
   onTypeChange(): void {
     this.searchName = null;
+    this.selectedBeers = [];
     this.page = 1;
     this.numberOfPages = 0;
     this.searchBeersByType();
-    console.log(this.selectedType);
   }
 
 // Get all country codes for a dropdown list
@@ -102,7 +98,6 @@ export class BeersComponent implements OnInit {
 
   getBeersByCountry(): void {
     this.apiService.getBeersByCountry(this.page).subscribe((response) => {
-      console.log(response);
       this.numberOfPages = response.numberOfPages;
       this.selectedBeers = response.data
         .filter((beer) => {
@@ -114,7 +109,7 @@ export class BeersComponent implements OnInit {
 
   onCountryChange(event: Event): void {
     this.searchName = null;
-    this.searchType = null;
+    this.selectedType = null;
     this.selectedBeers = null;
     this.page = 1;
     this.numberOfPages = 0;
@@ -124,7 +119,7 @@ export class BeersComponent implements OnInit {
   clearInputFields(): void {
     this.getRandomBeer();
     this.searchName = null;
-    this.searchType = null;
+    this.selectedType = null;
     this.selectedBeers = null;
     this.selectedCode = null;
     this.selectedType = null;
@@ -136,16 +131,10 @@ export class BeersComponent implements OnInit {
     this.page += 1;
     if (this.searchName.length > 0) {
       this.searchBeersByName();
-    } else if (this.searchType.length > 0) {
-      (
-        this.searchBeersByType()
-      );
     } else if (this.selectedCode) {
       this.getBeersByCountry();
     }
     this.selectedBeers = null;
     this.randomBeer = null;
-    console.log('pages', this.page);
-    console.log('numberOfPages', this.numberOfPages);
   }
 }

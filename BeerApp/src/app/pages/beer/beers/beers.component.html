@@ -9,7 +9,6 @@
       <button disabled style="background-color: darkgrey; border: none">Next page</button>
     </ng-template>
   </div>
-
   <div class="search-boxes">
     <div>
       <label class="name">
@@ -43,18 +42,10 @@
       </option>
     </select>
   </div>
-
   <div class="numberOfPages" *ngIf="numberOfPages >= 1 && page < numberOfPages + 1; else noPages">
     <h5>page {{page}}/{{numberOfPages}}</h5>
   </div>
-
   <ng-template #noPages>
-    <div *ngIf="page > numberOfPages && numberOfPages > 1; else empty">
-      <p>No more beers here</p>
-    </div>
-    <ng-template #empty>
-      <p></p>
-    </ng-template>
   </ng-template>
   <div class="beer-box"
        *ngIf="selectedBeers.length == 0 && !selectedCode && !selectedType && page === 1; else searchForBeers">
@@ -77,9 +68,7 @@
       <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active"><h4>Read more >></h4></a>
     </div>
   </div>
-
   <ng-template #searchForBeers>
-    <div *ngIf="!selectedBeersByType; else beersByType">
       <div class="beers-box" *ngIf="selectedBeers.length > 0; else loading">
         <ng-container *ngFor="let item of selectedBeers">
           <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
@@ -90,17 +79,7 @@
         <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
              alt="beer"/>
       </ng-template>
-    </div>
-    <ng-template #beersByType>
-      <div class="beers-box" *ngIf="selectedBeersByType.totalResults !==0; else noData">
-        <ng-container *ngFor="let item of selectedBeersByType.data">
-          <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
-        </ng-container>
-      </div>
-      <ng-template #noData>
-          <h3>Sorry! Nothing here!</h3>
-        </ng-template>
-    </ng-template>
+
   </ng-template>
 </div>
 <ng-template #loading>
