@@ -70,7 +70,7 @@
   </div>
 
   <ng-template #searchForBeers>
-    <div class="beers-box" *ngIf="selectedBeers.length >0; else loading">
+    <div class="beers-box" *ngIf="selectedBeers.length > 0; else loading">
       <ng-container *ngFor="let item of selectedBeers">
         <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
       </ng-container>

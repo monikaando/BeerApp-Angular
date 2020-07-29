@@ -26,6 +26,7 @@ export class BeersComponent implements OnInit {
   ngOnInit(): void {
     this.getLocations();
     this.getRandomBeer();
+    this.searchBeersTypes();
   }
 
   getRandomBeer(): void {
@@ -47,11 +48,11 @@ export class BeersComponent implements OnInit {
       console.log(response);
       this.searchType = '';
       this.numberOfPages = response.numberOfPages;
-      if (response.data){
-      this.selectedBeers = response.data
-        .filter((beer) => {
-          return beer.name.toLowerCase().includes(this.searchName.toLowerCase());
-        });
+      if (response.data) {
+        this.selectedBeers = response.data
+          .filter((beer) => {
+            return beer.name.toLowerCase().includes(this.searchName.toLowerCase());
+          });
       }
     });
   }
@@ -63,28 +64,23 @@ export class BeersComponent implements OnInit {
     this.searchBeersByName();
   }
 
-  // searchBeersTypes(): void {
-  //   this.beersTypes
-  //     .filter((beer) => {
-  //       return beer.style && beer.style.name.toLowerCase().includes(this.searchType.toLowerCase());
-  //     })
-  //     .map((beer) => {
-  //       this.beersTypes.push(beer.style.name);
-  //     });
-  //   this.uniqueBeersTypes = [...new Set(this.beersTypes)];
-  //   console.log('Unique beers', this.uniqueBeersTypes);
-  // }
+  searchBeersTypes(): void {
+    this.apiService.getBeersTypes().subscribe((response) => {
+      this.beersTypes = response;
+      console.log('beersTypes for all countries', this.beersTypes);
+    });
+  }
 
   searchBeersByType(): void {
     this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {
       this.searchName = '';
       this.numberOfPages = response.numberOfPages;
-      if (response.data){
-      this.selectedBeers = response.data
-        .filter((beer) => {
-          return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase()
-            .includes(this.searchType.toLowerCase());
-        });
+      if (response.data) {
+        this.selectedBeers = response.data
+          .filter((beer) => {
+            return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase()
+              .includes(this.searchType.toLowerCase());
+          });
       }
     });
   }

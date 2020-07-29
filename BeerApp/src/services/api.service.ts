@@ -7,9 +7,7 @@ import {BeerDetails} from '../app/models/beerDetails';
 import {BreweryDetails} from '../app/models/breweryDetails';
 
 interface ApiResponse {
-  currentPage: number;
   numberOfPages: number;
-  totalResults: number;
   data: any;
 }
 
@@ -32,8 +30,8 @@ export class ApiService {
 
   getLocations(): Observable<any> {
     let locations = [];
-    return this.http.get('api/locations/?key=659d5c6b8f3d2447f090119e48202fdb').pipe(map((data: ApiResponse) => {
-      locations = data.data
+    return this.http.get('api/locations/?key=659d5c6b8f3d2447f090119e48202fdb').pipe(map((response: ApiResponse) => {
+      locations = response.data
         .filter((brewery: BreweryDetails) => {
           return brewery.countryIsoCode !== undefined && brewery.countryIsoCode !== null;
         })
@@ -58,6 +56,19 @@ export class ApiService {
   }
 
   // beers
+  getBeersTypes(): Observable<any>{
+    let beersTypes = [];
+    return this.http.get('api/beers/?key=659d5c6b8f3d2447f090119e48202fdb')
+      .pipe(map((response: ApiResponse) => {
+        beersTypes = response.data
+          .filter((beer: BeerDetails) => {
+          return beer.style !== undefined && beer.style !== null;
+        })
+          .map((beer) => beer.style.name);
+        return this.utilsService.makeUnique(beersTypes);
+      }));
+  }
+
   getBeersByBrewery(breweryId: string): Observable<BeerDetails> {
     return this.http.get(`api/brewery/${breweryId}/beers/?key=659d5c6b8f3d2447f090119e48202fdb`)
       .pipe(map((response: ApiResponse) => response.data as BeerDetails));

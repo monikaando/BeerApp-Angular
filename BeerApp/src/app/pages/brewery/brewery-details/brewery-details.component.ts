@@ -64,7 +64,7 @@ export class BreweryDetailsComponent implements OnInit {
   searchBeersTypes(): void {
     this.beersList
       .filter((beer) => {
-        return beer.style && beer.style.name.toLowerCase().includes(this.filterType.toLowerCase());
+        return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.filterType.toLowerCase());
       })
       .map((beer) => {
         this.beersTypes.push(beer.style.name);
