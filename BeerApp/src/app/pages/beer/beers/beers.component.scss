@@ -19,6 +19,12 @@
     border: 0 !important;
     background: #ffb700ec;
     background-image: none;
+    width:300px;
+    flex: 1;
+    padding: 0 0 0 1em;
+    color: #240603b9;
+    font-weight: bold;
+    cursor: pointer;
   }
 
   /* Remove IE arrow */
@@ -30,27 +36,20 @@
   .select {
     position: relative;
     display: flex;
-    width: 153px;
     height: 23px;
     line-height: 3.2;
     background: #ffb700ec;
     overflow: hidden;
     border-radius: .25em;
     margin: 2% 0;
+    width:300px;
 
     label {
       font-size: .8em;
       line-height: 1.8;
       padding-left: 10px;
+      white-space: nowrap;
     }
-  }
-
-  select {
-    flex: 1;
-    padding: 0 0 0 1em;
-    color: #240603b9;
-    font-weight: bold;
-    cursor: pointer;
   }
 
   /* Arrow */
@@ -128,7 +127,7 @@
 
   .beer-box {
     width: 50%;
-    margin: 0 10% 2% 15%;
+    margin: 0 10% 2% 10%;
     text-align: left;
     padding: 0 10%;
     @media screen and (min-width: 300px) and (max-width: 650px) {

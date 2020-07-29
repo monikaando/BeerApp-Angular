@@ -42,7 +42,7 @@ export class BreweryDetailsComponent implements OnInit {
   getBeersByBrewery(): void {
     this.apiService.getBeersByBrewery(this.breweryId).subscribe((response) => {
       this.beersList = response;
-      this.searchBeersTypes();
+      this.getBeersTypes();
     });
   }
 
@@ -61,7 +61,7 @@ export class BreweryDetailsComponent implements OnInit {
     this.searchBeersByName();
   }
 
-  searchBeersTypes(): void {
+  getBeersTypes(): void {
     this.beersList
       .filter((beer) => {
         return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase().includes(this.filterType.toLowerCase());

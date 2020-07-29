@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../../../services/api.service';
+import {BeerDetails} from '../../../models/beerDetails';
 
 @Component({
   selector: 'app-beers',
@@ -7,15 +8,16 @@ import {ApiService} from '../../../../services/api.service';
   styleUrls: ['./beers.component.scss']
 })
 export class BeersComponent implements OnInit {
-  searchName = '';
-  searchType = '';
+  searchName: string;
+  searchType: string;
+  selectedType: any;
+  selectedCode: string;
+  randomBeerById: string;
+  randomBeer: BeerDetails;
+  selectedBeers: BeerDetails[];
+  selectedBeersByType: any;
   beersTypes: any = [];
-  uniqueBeersTypes: any = [];
   codes: any = [];
-  selectedCode = '';
-  randomBeer: any;
-  randomBeerById = '';
-  selectedBeers: any = [];
   page = 1;
   numberOfPages = 0;
   loadingInProgress = true;
@@ -25,8 +27,8 @@ export class BeersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLocations();
+    this.getBeersTypes();
     this.getRandomBeer();
-    this.searchBeersTypes();
   }
 
   getRandomBeer(): void {
@@ -34,8 +36,8 @@ export class BeersComponent implements OnInit {
       this.randomBeer = response;
       this.randomBeerById = response.id;
       this.loadingInProgress = false;
-      this.searchName = '';
-      this.searchType = '';
+      this.searchName = null;
+      this.searchType = null;
       this.selectedBeers = [];
       this.apiService.getBeerById(this.randomBeerById).subscribe((resp) => {
         this.randomBeer = resp;
@@ -46,7 +48,7 @@ export class BeersComponent implements OnInit {
   searchBeersByName(): void {
     this.apiService.getBeersByName(this.page, this.searchName).subscribe((response) => {
       console.log(response);
-      this.searchType = '';
+      this.searchType = null;
       this.numberOfPages = response.numberOfPages;
       if (response.data) {
         this.selectedBeers = response.data
@@ -58,38 +60,37 @@ export class BeersComponent implements OnInit {
   }
 
   onNameChange(): void {
-    this.searchType = '';
+    this.searchType = null;
     this.page = 1;
     this.numberOfPages = 0;
     this.searchBeersByName();
   }
 
-  searchBeersTypes(): void {
+  getBeersTypes(): void {
     this.apiService.getBeersTypes().subscribe((response) => {
-      this.beersTypes = response;
-      console.log('beersTypes for all countries', this.beersTypes);
+      response
+        .map((beer) => {
+          this.beersTypes.push(beer);
+        });
     });
+    console.log('beersTypes', this.beersTypes);
+    console.log('selectedBeers', this.selectedBeers);
   }
 
   searchBeersByType(): void {
-    this.apiService.getBeersByType(this.page, this.searchType).subscribe((response) => {
-      this.searchName = '';
-      this.numberOfPages = response.numberOfPages;
-      if (response.data) {
-        this.selectedBeers = response.data
-          .filter((beer) => {
-            return beer.style !== undefined && beer.style !== null && beer.style.name.toLowerCase()
-              .includes(this.searchType.toLowerCase());
-          });
-      }
+    this.apiService.getBeersByType(this.selectedType.id).subscribe((response) => {
+      this.searchName = null;
+      this.selectedBeersByType = response;
+      console.log('searchBeersByType', response);
     });
   }
 
   onTypeChange(): void {
-    this.searchName = '';
+    this.searchName = null;
     this.page = 1;
     this.numberOfPages = 0;
     this.searchBeersByType();
+    console.log(this.selectedType);
   }
 
 // Get all country codes for a dropdown list
@@ -112,21 +113,21 @@ export class BeersComponent implements OnInit {
   }
 
   onCountryChange(event: Event): void {
-    this.searchName = '';
-    this.searchType = '';
-    this.selectedBeers = [];
+    this.searchName = null;
+    this.searchType = null;
+    this.selectedBeers = null;
     this.page = 1;
     this.numberOfPages = 0;
     this.getBeersByCountry();
-
   }
 
   clearInputFields(): void {
     this.getRandomBeer();
-    this.searchName = '';
-    this.searchType = '';
-    this.selectedBeers = [];
-    this.selectedCode = '';
+    this.searchName = null;
+    this.searchType = null;
+    this.selectedBeers = null;
+    this.selectedCode = null;
+    this.selectedType = null;
     this.page = 1;
     this.numberOfPages = 0;
   }
@@ -142,8 +143,8 @@ export class BeersComponent implements OnInit {
     } else if (this.selectedCode) {
       this.getBeersByCountry();
     }
-    this.selectedBeers = [];
-    this.randomBeer = [];
+    this.selectedBeers = null;
+    this.randomBeer = null;
     console.log('pages', this.page);
     console.log('numberOfPages', this.numberOfPages);
   }

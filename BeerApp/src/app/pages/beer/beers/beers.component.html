@@ -15,13 +15,22 @@
       <label class="name">
         <input type="text" [(ngModel)]="searchName" placeholder="search by name" (change)="onNameChange()">
       </label>
-      <label class="type">
-        <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange()">
-      </label>
     </div>
   </div>
-
-  <div class="select">
+  <div class="select type">
+    <label *ngIf="!selectedType">Choose a type</label>
+    <select
+      aria-label="selected-type"
+      name="selectedType"
+      [(ngModel)]="selectedType"
+      (change)="onTypeChange()"
+    >
+      <option [ngValue]='item' *ngFor="let item of beersTypes">
+        {{item.id}}. {{item.name}}
+      </option>
+    </select>
+  </div>
+  <div class="select country">
     <label *ngIf="!selectedCode">Choose a country</label>
     <select
       aria-label="country-code"
@@ -47,8 +56,8 @@
       <p></p>
     </ng-template>
   </ng-template>
-
-  <div class="beer-box" *ngIf="selectedBeers.length === 0 && !selectedCode && page === 1; else searchForBeers">
+  <div class="beer-box"
+       *ngIf="selectedBeers.length == 0 && !selectedCode && !selectedType && page === 1; else searchForBeers">
     <div class="random-beer">
       <button class="button-random" (click)="getRandomBeer()">Random beer</button>
       <a routerLink="beer/{{randomBeer.id}}" routerLinkActive="active">
@@ -70,19 +79,30 @@
   </div>
 
   <ng-template #searchForBeers>
-    <div class="beers-box" *ngIf="selectedBeers.length > 0; else loading">
-      <ng-container *ngFor="let item of selectedBeers">
-        <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
-      </ng-container>
+    <div *ngIf="!selectedBeersByType; else beersByType">
+      <div class="beers-box" *ngIf="selectedBeers.length > 0; else loading">
+        <ng-container *ngFor="let item of selectedBeers">
+          <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
+        </ng-container>
+      </div>
+      <ng-template #loading>
+        <h3><b>Loading...</b></h3>
+        <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+             alt="beer"/>
+      </ng-template>
     </div>
-    <ng-template #loading>
-      <h3><b>Loading...</b></h3>
-      <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
-           alt="beer"/>
+    <ng-template #beersByType>
+      <div class="beers-box" *ngIf="selectedBeersByType.totalResults !==0; else noData">
+        <ng-container *ngFor="let item of selectedBeersByType.data">
+          <a routerLink="beer/{{item.id}}" routerLinkActive="active"><h5>{{item.name}}</h5></a>
+        </ng-container>
+      </div>
+      <ng-template #noData>
+          <h3>Sorry! Nothing here!</h3>
+        </ng-template>
     </ng-template>
   </ng-template>
 </div>
-
 <ng-template #loading>
   <h3><b>Loading...</b></h3>
   <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
