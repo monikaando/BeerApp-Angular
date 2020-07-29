@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../../../services/api.service';
-import {Beer} from '../../../models/beer';
 
 @Component({
   selector: 'app-beers',
@@ -57,8 +56,7 @@ export class BeersComponent implements OnInit {
     });
   }
 
-  onNameChange(value: string): void {
-    // this.value = this.searchName;
+  onNameChange(): void {
     this.searchType = '';
     this.page = 1;
     this.numberOfPages = 0;
@@ -91,11 +89,10 @@ export class BeersComponent implements OnInit {
     });
   }
 
-  onTypeChange(value): void {
+  onTypeChange(): void {
     this.searchName = '';
     this.page = 1;
     this.numberOfPages = 0;
-    value = this.searchType;
     this.searchBeersByType();
   }
 

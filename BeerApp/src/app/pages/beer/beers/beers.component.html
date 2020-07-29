@@ -2,7 +2,7 @@
   <h2>Search beers by name, type or country</h2>
   <div class="buttons-next-clear">
     <button (click)=clearInputFields()>Reset searching</button>
-    <div *ngIf="!onNameChange || !onTypeChange || selectedCode !=='' || page < numberOfPages; else disabled">
+    <div *ngIf="!onNameChange || !onTypeChange || !onCountryChange || page < numberOfPages; else disabled">
       <button (click)=getNextPage()>Next page</button>
     </div>
     <ng-template #disabled>
@@ -13,10 +13,10 @@
   <div class="search-boxes">
     <div>
       <label class="name">
-        <input type="text" [(ngModel)]="searchName" placeholder="search by name" (change)="onNameChange($event)">
+        <input type="text" [(ngModel)]="searchName" placeholder="search by name" (change)="onNameChange()">
       </label>
       <label class="type">
-        <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange($event)">
+        <input type="text" [(ngModel)]="searchType" placeholder="search by type" (change)="onTypeChange()">
       </label>
     </div>
   </div>
