@@ -8,23 +8,23 @@
   </h2>
   <div class="buttons-next-clear">
 
-<!--    <div-->
-<!--      *ngIf="!onNameChange || !onTypeChange || !onCountryChange || page <= numberOfPages;-->
-<!--      else disabled">-->
-<!--      <button-->
-<!--        (click)=getPreviousPage()-->
-<!--      >-->
-<!--        Previous page-->
-<!--      </button>-->
-<!--    </div>-->
-<!--    <ng-template #disabled>-->
-<!--      <button-->
-<!--        disabled-->
-<!--        style="background-color: darkgrey;-->
-<!--        border: none">-->
-<!--        Previous page-->
-<!--      </button>-->
-<!--    </ng-template>-->
+    <div
+      *ngIf="!onNameChange || !onTypeChange || !onCountryChange || page !== 1;
+      else disabled">
+      <button
+        (click)=getPreviousPage()
+      >
+        Previous page
+      </button>
+    </div>
+    <ng-template #disabled>
+      <button
+        disabled
+        style="background-color: darkgrey;
+        border: none">
+        Previous page
+      </button>
+    </ng-template>
 
     <button
       (click)=clearInputFields()>

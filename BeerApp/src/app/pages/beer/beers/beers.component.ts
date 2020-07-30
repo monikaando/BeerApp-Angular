@@ -138,14 +138,14 @@ export class BeersComponent implements OnInit {
     this.selectedBeers = null;
     this.randomBeer = null;
   }
-  // getPreviousPage(): void {
-  //   this.page -= 1;
-  //   if (this.searchName.length > 0) {
-  //     this.searchBeersByName();
-  //   } else if (this.selectedCode) {
-  //     this.getBeersByCountry();
-  //   }
-  //   this.selectedBeers = null;
-  //   this.randomBeer = null;
-  // }
+  getPreviousPage(): void {
+    this.page -= 1;
+    if (this.searchName && this.searchName.length > 0) {
+      this.searchBeersByName();
+    } else if (this.selectedCode) {
+      this.getBeersByCountry();
+    }
+    this.selectedBeers = null;
+    this.randomBeer = null;
+  }
 }
