@@ -23,6 +23,7 @@ export class BreweriesComponent implements OnInit {
   ngOnInit(): void {
     this.getBreweries();
     this.getLocations();
+    console.log(this.selectedBreweries);
   }
 
   getBreweries(): void {

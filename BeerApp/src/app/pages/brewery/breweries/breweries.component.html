@@ -42,9 +42,23 @@
       *ngIf="searchName !=='';
       else showPage"
     >
-      <ng-container
+      <div class="img_brewery"
         *ngFor="let item of selectedBreweries"
       >
+        <ng-container
+          *ngIf="item.images;
+            else noImage">
+          <img
+            src="{{item.images.icon}}"
+            alt="image"
+          >
+        </ng-container>
+        <ng-template #noImage>
+          <div></div>
+          <img
+            src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_64/v1596114778/PXl.WIDGETS/noimage.png"
+            alt="brewery_icon">
+        </ng-template>
         <div>
           <a
             routerLink="brewery/{{item.id}}"
@@ -54,7 +68,7 @@
             </h4>
           </a>
         </div>
-      </ng-container>
+      </div>
     </div>
     <ng-template #showPage>
       <ng-container>
@@ -66,9 +80,23 @@
         *ngIf="selectedCode==='All countries';
         else chosenCountries"
       >
-        <ng-container
+        <div class="img_brewery"
           *ngFor="let item of selectedBreweries"
         >
+          <ng-container
+            *ngIf="item.images;
+            else noImage">
+            <img
+              src="{{item.images.icon}}"
+              alt="image"
+            >
+          </ng-container>
+          <ng-template #noImage>
+            <div></div>
+            <img
+              src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_64/v1596114778/PXl.WIDGETS/noimage.png"
+              alt="brewery_icon">
+          </ng-template>
           <div>
             <a
               routerLink="brewery/{{item.id}}"
@@ -78,12 +106,26 @@
               </h4>
             </a>
           </div>
-        </ng-container>
+        </div>
       </div>
       <ng-template #chosenCountries>
-        <ng-container
+        <div class="img_brewery"
           *ngFor="let item of uniqueBrewByCountry"
         >
+          <ng-container
+            *ngIf="item.brewery.images;
+            else noImage">
+            <img
+              src="{{item.brewery.images.icon}}"
+              alt="image"
+            >
+          </ng-container>
+          <ng-template #noImage>
+            <div></div>
+            <img
+              src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_64/v1596114778/PXl.WIDGETS/noimage.png"
+              alt="brewery_icon">
+          </ng-template>
           <div>
             <a
               routerLink="brewery/{{item.breweryId}}"
@@ -93,7 +135,7 @@
               </h4>
             </a>
           </div>
-        </ng-container>
+        </div>
       </ng-template>
     </ng-template>
   </div>

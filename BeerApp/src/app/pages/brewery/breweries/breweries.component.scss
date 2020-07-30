@@ -26,13 +26,10 @@ $brand-font-color: #271717;
     margin: 7% 0;
   }
 
-  //input {
-  //  margin-bottom: 5%;
-  //}
-
   label {
     margin-bottom: 3%;
   }
+
   input {
     width: 140px;
     margin-right: 6%;
@@ -41,17 +38,19 @@ $brand-font-color: #271717;
     border: 1px solid #46464681;
     padding-left: 5px;
   }
+
   button {
     margin: 2% 5% 5% 5%;
     width: 170px;
     height: 25px;
     font-weight: bold;
     border-radius: 5px;
-    background-color:#ffb700ec;
+    background-color: #ffb700ec;
     border-color: rgba(255, 211, 99, 0.773);
-    color:#240603b9;
+    color: #240603b9;
   }
-  button:focus{
+
+  button:focus {
     outline: none;
   }
 
@@ -110,5 +109,23 @@ $brand-font-color: #271717;
   /* Transition */
   .select:hover::after {
     color: #f39c12;
+  }
+
+  .img_brewery {
+    display: flex;
+    flex-direction: row;
+    padding-right: 2%;
+    margin: 0 0 2% 0;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    width:105%;
+
+    img {
+      border-radius: 15px;
+    }
+    h4 {
+      margin-left: 20px;
+      text-align: left;
+    }
   }
 }
