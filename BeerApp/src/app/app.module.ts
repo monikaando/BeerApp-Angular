@@ -10,6 +10,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { BreweryDetailsComponent } from './pages/brewery/brewery-details/brewery-details.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { BeerDetailsComponent } from './pages/beer/beer-details/beer-details.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { BeerDetailsComponent } from './pages/beer/beer-details/beer-details.com
     BreweryDetailsComponent,
     PageNotFoundComponent,
     BeerDetailsComponent,
+    NavbarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

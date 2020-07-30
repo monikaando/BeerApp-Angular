@@ -1,0 +1,60 @@
+.nav-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  @media screen
+  and (min-width: 300px)
+  and (max-width: 650px) {
+    width: 95%;
+    margin-left:2px;
+  }
+  @media screen
+  and (min-width: 651px)
+  and (max-width: 900px) {
+    width: 95%
+  }
+  @media screen
+  and (min-width: 901px)
+  and (max-width: 1100px) {
+    width: 70%
+  }
+  .home-icon {
+    width: auto;
+    @media screen
+    and (min-width: 300px)
+    and (max-width: 650px) {
+      width: 195px
+    }
+  }
+  button {
+    text-decoration: none;
+    padding: 2%;
+    margin: 2% 0 3% 0;
+    width: 70%;
+    background-color:#ffb700ec;
+    border-color: rgba(255, 211, 99, 0.773);
+    border-radius: 5px;
+    color:#240603b9;
+    font-size: 1em;
+    font-weight: 700;
+    @media screen
+    and (min-width: 300px)
+    and (max-width: 650px) {
+      width: 100%;
+      font-size: 0.8em;
+    }
+  }
+  button:focus{
+    outline: none;
+  }
+  img {
+    width: 20%;
+    margin-bottom:1%;
+    @media screen
+    and (min-width: 300px)
+    and (max-width: 650px) {
+      width: 50%;
+    }
+  }
+}

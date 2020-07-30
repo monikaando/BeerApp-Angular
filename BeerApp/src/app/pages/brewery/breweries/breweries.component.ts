@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../../../services/api.service';
 import {BreweryDetails} from '../../../models/breweryDetails';
+import {UtilsService} from '../../../../services/utils.service';
 
 @Component({
   selector: 'app-breweries',
@@ -17,19 +18,20 @@ export class BreweriesComponent implements OnInit {
   uniqueBrewByCountry: any = [];
   searchName = '';
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService,
+              protected utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
     this.getBreweries();
     this.getLocations();
-    console.log(this.selectedBreweries);
   }
 
   getBreweries(): void {
     this.apiService.getBreweries().subscribe((response) => {
       this.data = response;
       this.selectedBreweries = this.data;
+      console.log(this.selectedBreweries);
     });
   }
 
@@ -43,7 +45,7 @@ export class BreweriesComponent implements OnInit {
   getBreweriesByCountry(): void {
     this.apiService.getBreweriesByCountry(this.selectedCode).subscribe((response) => {
       this.breweriesByCountry = response;
-      this.uniqueBreweriesByCountry(response);
+      this.utilsService.uniqueByValueInArray(response, 'name', this.uniqueBrewByCountry);
     });
   }
 
@@ -51,20 +53,6 @@ export class BreweriesComponent implements OnInit {
     this.searchName = '';
     this.uniqueBrewByCountry = [];
     this.getBreweriesByCountry();
-  }
-
-  uniqueBreweriesByCountry(response): void {
-    const uniqueObject = {};
-    const data = response;
-    for (const i in data) {
-      if (data.hasOwnProperty(i)) {
-        const objId = data[i].brewery['name'];
-        uniqueObject[objId] = data[i];
-      }
-    }
-    for (const i in uniqueObject) {
-      this.uniqueBrewByCountry.push(uniqueObject[i]);
-    }
   }
 
   searchBreweriesByName(): void {

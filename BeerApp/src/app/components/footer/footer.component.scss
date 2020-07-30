@@ -1,0 +1,24 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom:0;
+  width:100%;
+  height:4vh;
+  background-color:#420b05b9;
+  color: #EDE6EE;
+  font-size: 12px;
+  @media screen
+  and (min-width: 300px)
+  and (max-width: 500px) {
+    font-size: 10px;
+  }
+  a {
+    text-decoration: underline;
+    color: #EDE6EE;
+  }
+  h4 {
+    color: #EDE6EE;
+  }
+}

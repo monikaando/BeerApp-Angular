@@ -126,8 +126,14 @@ $brand-font-color: #271717;
       border-radius: 15px;
     }
     h4 {
-      margin-left: 20px;
+      margin: 20px 0 5px 20px;
       text-align: left;
+    }
+    h6 {
+      font-size: 0.7em;
+      margin: 0 0 0 20px;
+      text-align: left;
+      color: grey;
     }
   }
 }
