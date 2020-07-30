@@ -11,7 +11,7 @@
 - To big HTML files which are difficult to read. A lot of nesting if’s.
 [Link](https://gitlab.pxlwidgets.com/pxl.widgets-heroes/assignments/blob/block1_monika/BeerApp/src/app/pages/beer/beers/beers.component.html)
 - Using less general types and more models.
-[Link](https://gitlab.pxlwidgets.com/pxl.widgets-heroes/assignments/blob/7256a9911debb911632d3a406b2bb5a7f2fdc69d/BeerApp/src/app/pages/beer/beers/beers.component.ts")
+[Link](https://gitlab.pxlwidgets.com/pxl.widgets-heroes/assignments/blob/block1_monika/BeerApp/src/app/pages/beer/beers/beers.component.ts)
 
 ## What are some ways you would like to improve the application if you had time?
 - Improve pagination function
