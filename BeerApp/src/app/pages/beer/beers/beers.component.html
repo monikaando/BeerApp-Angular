@@ -158,6 +158,9 @@
     </div>
   </div>
   <ng-template #searchForBeers>
+    <ng-container *ngIf="selectedType">
+      <p>Matched results: {{selectedBeersByType.totalResults}}</p>
+    </ng-container>
     <div
       class="beers-box"
       *ngIf="selectedBeers && selectedBeers.length > 0;
@@ -175,12 +178,17 @@
       </ng-container>
     </div>
     <ng-template #loading>
+      <ng-container *ngIf="selectedType && selectedBeersByType.totalResults == 0; else loadingIcon">
+        <h2>Sorry! Nothing here.</h2>
+      </ng-container>
+      <ng-template #loadingIcon>
       <h3>
         <b>Loading...</b>
       </h3>
       <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
            alt="beer"
       />
+      </ng-template>
     </ng-template>
   </ng-template>
 </div>
