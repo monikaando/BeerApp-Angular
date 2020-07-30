@@ -9,7 +9,7 @@ import {BeerDetails} from '../../../models/beerDetails';
 })
 export class BeersComponent implements OnInit {
   searchName: string;
-  selectedType: any;
+  selectedType: any = [];
   selectedCode: string;
   randomBeerById: string;
   randomBeer: BeerDetails;

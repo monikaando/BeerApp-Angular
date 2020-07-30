@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from "../../../../services/api.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ApiService} from '../../../../services/api.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BeerDetails} from '../../../models/beerDetails';
 
 @Component({
   selector: 'app-beer-detail',
@@ -8,28 +9,23 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./beer-details.component.scss']
 })
 export class BeerDetailsComponent implements OnInit {
-  beerId: string = "";
-  beerDetails: any;
+  beerId: string;
+  beerDetails: BeerDetails;
   loadingInProgress = true;
 
   constructor(private apiService: ApiService,
               private router: Router,
               public route: ActivatedRoute) {
-
-    this.beerId = this.route.snapshot.paramMap.get('beerId'); //get id parameter
+    // get id parameter
+    this.beerId = this.route.snapshot.paramMap.get('beerId');
   }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.getBeerById();
   }
-
-  getBeerById() {
+  getBeerById(): void {
     this.apiService.getBeerById(this.beerId).subscribe((response) => {
-      this.beerDetails = response
+      this.beerDetails = response;
       this.loadingInProgress = false;
-      console.log('response', response)
-      console.log('beerId', this.beerId)
-      console.log('beerDetails', this.beerDetails)
-    })
+    });
   }
 }

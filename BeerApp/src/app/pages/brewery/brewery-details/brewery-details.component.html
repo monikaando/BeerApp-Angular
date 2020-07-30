@@ -1,22 +1,49 @@
-<div class="single-brew-page" *ngIf="!loadingInProgress else loading">
-  <h1>{{breweryDetails.name}}</h1>
-  <div *ngIf="breweryDetails.established; else noEstablished">
-    <h5><b>Established: {{breweryDetails.established}}</b></h5>
+<div
+  class="single-brew-page"
+  *ngIf="!loadingInProgress;
+  else loading"
+>
+  <h1>
+    {{breweryDetails.name}}
+  </h1>
+  <div
+    *ngIf="breweryDetails.established;
+    else noEstablished"
+  >
+    <h5>
+      <b>Established: {{breweryDetails.established}}</b>
+    </h5>
   </div>
   <ng-template #noEstablished>
   </ng-template>
   <div class="brew-img-details">
-    <div class="brew-img" *ngIf="breweryDetails.images; else noImage">
+    <div
+      class="brew-img"
+      *ngIf="breweryDetails.images;
+      else noImage"
+    >
       <div>
-        <a href="{{breweryDetails.website}}" rel="noopener noreferrer" target="_blank">
-          <img src="{{breweryDetails.images.squareMedium}}" alt="brewery-logo"/>
+        <a
+          href="{{breweryDetails.website}}"
+          rel="noopener noreferrer" target="_blank"
+        >
+          <img
+            src="{{breweryDetails.images.squareMedium}}"
+            alt="brewery-logo"
+          />
         </a>
       </div>
     </div>
     <ng-template #noImage>
     </ng-template>
-    <a href="{{breweryDetails.website}}" rel="noopener noreferrer" target="_blank">
-      <h4>{{breweryDetails.website}}</h4>
+    <a
+      href="{{breweryDetails.website}}"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <h4>
+        {{breweryDetails.website}}
+      </h4>
     </a>
     <div class="brew-description">
       <p>
@@ -25,62 +52,121 @@
     </div>
   </div>
   <label>
-    <input type="text" [(ngModel)]="searchName" (change)="onNameChange($event)" placeholder="Search by name">
+    <input
+      type="text"
+      [(ngModel)]="searchName"
+      (change)="onNameChange($event)"
+      placeholder="Search by name"
+    >
   </label>
   <div class="select">
-    <label *ngIf="!filterType">Choose a beer by type</label>
+    <label
+      *ngIf="!filterType">
+      Choose a beer by type
+    </label>
     <select
       aria-label="country-code"
       name="selectedCode"
       [(ngModel)]="filterType"
       (change)="onTypeChange($event)"
     >
-      <option *ngFor="let item of uniqueBeersTypes" [ngValue]='item'>
+      <option
+        *ngFor="let item of uniqueBeersTypes"
+        [ngValue]='item'
+      >
         {{item}}
       </option>
     </select>
   </div>
-  <button (click)=clearInputFields()>Reset searching</button>
-  <div *ngIf="searchName ==='' && filterType ===''; else searchAndFilterResults">
-    <div class="beers" *ngIf="beersList; else noBeers">
-      <div class="beersCounter" *ngIf="beersList.length === 1;  else moreBeers">
-        <h2>The brewery produces 1 beer: </h2>
+  <button
+    (click)=clearInputFields()
+  >
+    Reset searching
+  </button>
+  <div
+    *ngIf="searchName ==='' && filterType ==='';
+    else searchAndFilterResults"
+  >
+    <div
+      class="beers"
+      *ngIf="beersList;
+      else noBeers">
+      <div
+        class="beersCounter"
+        *ngIf="beersList.length === 1;
+        else moreBeers"
+      >
+        <h2>
+          The brewery produces 1 beer:
+        </h2>
         <div class="beers-box">
-          <a href="beers/beer/{{beersList.id}}">
-            <h5>{{beersList.name}}</h5></a>
+          <a
+            href="beers/beer/{{beersList.id}}"
+          >
+            <h5>
+              {{beersList.name}}
+            </h5>
+          </a>
         </div>
       </div>
       <ng-template #moreBeers>
-        <h2>The brewery produces <u>{{beersList.length}}</u> beers: </h2>
+        <h2>
+          The brewery produces
+          <u>
+            {{beersList.length}}
+          </u>
+          beers:
+        </h2>
       </ng-template>
       <div class="beers-box">
-        <ng-container *ngFor="let beer of beersList">
+        <ng-container
+          *ngFor="let beer of beersList"
+        >
           <div>
-            <a href="beers/beer/{{beer.id}}">
-              <h5>{{beer.name}}</h5></a>
+            <a
+              href="beers/beer/{{beer.id}}"
+            >
+              <h5>
+                {{beer.name}}
+              </h5>
+            </a>
           </div>
         </ng-container>
       </div>
     </div>
     <ng-template #noBeers>
-      <h2>Sorry! The brewery doesn't produce beers yet.</h2>
+      <h2>
+        Sorry! The brewery doesn't produce beers yet.
+      </h2>
     </ng-template>
   </div>
   <ng-template #searchAndFilterResults>
     <div class="beers">
       <div class="beers-box by-name">
-        <ng-container *ngFor="let beer of searchBeersList">
+        <ng-container
+          *ngFor="let beer of searchBeersList"
+        >
           <div>
-            <a href="beers/beer/{{beer.id}}">
-              <h5>{{beer.name}}</h5></a>
+            <a href="beers/beer/{{beer.id}}"
+            >
+              <h5>
+                {{beer.name}}
+              </h5>
+            </a>
           </div>
         </ng-container>
       </div>
     </div>
   </ng-template>
 </div>
-<ng-template #loading><br><br><br>
-  <h3><b>Loading...</b></h3>
-  <img src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
-       alt="beer"/>
+<ng-template #loading>
+  <h3>
+    <b>
+      Loading...
+    </b>
+  </h3>
+  <img
+    src="https://res.cloudinary.com/mokaweb/image/upload/c_scale,w_144/v1588238513/PXl.WIDGETS/beer.gif"
+    alt="beer"
+  />
 </ng-template>
