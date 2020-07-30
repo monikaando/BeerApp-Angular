@@ -59,6 +59,7 @@ export class BeersComponent implements OnInit {
 
   onNameChange(): void {
     this.selectedType = null;
+    this.selectedCode = null;
     this.page = 1;
     this.numberOfPages = 0;
     this.searchBeersByName();
