@@ -108,7 +108,7 @@ export class BeersComponent implements OnInit {
     });
   }
 
-  onCountryChange(event: Event): void {
+  onCountryChange(): void {
     this.searchName = null;
     this.selectedType = null;
     this.selectedBeers = null;
@@ -130,7 +130,7 @@ export class BeersComponent implements OnInit {
 
   getNextPage(): void {
     this.page += 1;
-    if (this.searchName.length > 0) {
+    if (this.searchName && this.searchName.length > 0) {
       this.searchBeersByName();
     } else if (this.selectedCode) {
       this.getBeersByCountry();
@@ -138,4 +138,14 @@ export class BeersComponent implements OnInit {
     this.selectedBeers = null;
     this.randomBeer = null;
   }
+  // getPreviousPage(): void {
+  //   this.page -= 1;
+  //   if (this.searchName.length > 0) {
+  //     this.searchBeersByName();
+  //   } else if (this.selectedCode) {
+  //     this.getBeersByCountry();
+  //   }
+  //   this.selectedBeers = null;
+  //   this.randomBeer = null;
+  // }
 }

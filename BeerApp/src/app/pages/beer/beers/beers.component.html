@@ -7,6 +7,25 @@
     Search beers by name, type or country
   </h2>
   <div class="buttons-next-clear">
+
+<!--    <div-->
+<!--      *ngIf="!onNameChange || !onTypeChange || !onCountryChange || page <= numberOfPages;-->
+<!--      else disabled">-->
+<!--      <button-->
+<!--        (click)=getPreviousPage()-->
+<!--      >-->
+<!--        Previous page-->
+<!--      </button>-->
+<!--    </div>-->
+<!--    <ng-template #disabled>-->
+<!--      <button-->
+<!--        disabled-->
+<!--        style="background-color: darkgrey;-->
+<!--        border: none">-->
+<!--        Previous page-->
+<!--      </button>-->
+<!--    </ng-template>-->
+
     <button
       (click)=clearInputFields()>
       Reset searching
@@ -68,7 +87,7 @@
       aria-label="country-code"
       name="selectedCode"
       [(ngModel)]="selectedCode"
-      (change)="onCountryChange($event)"
+      (change)="onCountryChange()"
     >
       <option
         [ngValue]='item'
@@ -88,7 +107,7 @@
   <ng-template #noPages>
   </ng-template>
   <div class="beer-box"
-       *ngIf="selectedBeers.length == 0 && !selectedCode && !selectedType && page === 1;
+       *ngIf="selectedBeers && selectedBeers.length == 0 && !selectedCode && !selectedType && page === 1;
        else searchForBeers"
   >
     <div class="random-beer">
@@ -141,7 +160,7 @@
   <ng-template #searchForBeers>
     <div
       class="beers-box"
-      *ngIf="selectedBeers.length > 0;
+      *ngIf="selectedBeers && selectedBeers.length > 0;
       else loading"
     >
       <ng-container
