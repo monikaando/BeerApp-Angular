@@ -45,7 +45,7 @@ export class BreweriesComponent implements OnInit {
   getBreweriesByCountry(): void {
     this.apiService.getBreweriesByCountry(this.selectedCode).subscribe((response) => {
       this.breweriesByCountry = response;
-      this.utilsService.uniqueByValueInArray(response, 'name', this.uniqueBrewByCountry);
+      this.utilsService.uniqueByValueInBreweriesArray(response, 'name', this.uniqueBrewByCountry);
     });
   }
 

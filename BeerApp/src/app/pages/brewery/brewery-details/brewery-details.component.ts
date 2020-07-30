@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '../../../../services/api.service';
+import {UtilsService} from '../../../../services/utils.service';
 
 @Component({
   selector: 'app-breweries-details',
@@ -20,7 +21,8 @@ export class BreweryDetailsComponent implements OnInit {
   loadingInProgress = true;
 
   constructor(private apiService: ApiService,
-              public route: ActivatedRoute) {
+              public route: ActivatedRoute,
+              protected utilsService: UtilsService,) {
     // get id parameter
     this.breweryId = this.route.snapshot.paramMap.get('breweryId');
   }
@@ -68,7 +70,7 @@ export class BreweryDetailsComponent implements OnInit {
       .map((beer) => {
         this.beersTypes.push(beer.style.name);
       });
-    this.uniqueBeersTypes = [...new Set(this.beersTypes)];
+    this.uniqueBeersTypes = this.utilsService.makeUnique(this.beersTypes);
   }
 
   searchBeersByType(): void {

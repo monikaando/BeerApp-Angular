@@ -60,8 +60,7 @@ export class BeersComponent implements OnInit {
   onNameChange(): void {
     this.selectedType = null;
     this.selectedCode = null;
-    this.page = 1;
-    this.numberOfPages = 0;
+    this.clearPagination();
     this.searchBeersByName();
   }
 
@@ -85,8 +84,7 @@ export class BeersComponent implements OnInit {
   onTypeChange(): void {
     this.searchName = null;
     this.selectedBeers = [];
-    this.page = 1;
-    this.numberOfPages = 0;
+    this.clearPagination();
     this.searchBeersByType();
   }
 
@@ -109,37 +107,40 @@ export class BeersComponent implements OnInit {
   }
 
   onCountryChange(): void {
-    this.searchName = null;
-    this.selectedType = null;
-    this.selectedBeers = null;
-    this.page = 1;
-    this.numberOfPages = 0;
+    this.clear();
     this.getBeersByCountry();
   }
 
   clearInputFields(): void {
     this.getRandomBeer();
+    this.clear();
+    this.selectedCode = null;
+    this.selectedType = null;
+  }
+
+  clear(): void {
     this.searchName = null;
     this.selectedType = null;
     this.selectedBeers = null;
-    this.selectedCode = null;
-    this.selectedType = null;
+    this.clearPagination();
+  }
+
+  clearPagination(): void {
     this.page = 1;
     this.numberOfPages = 0;
   }
 
   getNextPage(): void {
     this.page += 1;
-    if (this.searchName && this.searchName.length > 0) {
-      this.searchBeersByName();
-    } else if (this.selectedCode) {
-      this.getBeersByCountry();
-    }
-    this.selectedBeers = null;
-    this.randomBeer = null;
+    this.getPage();
   }
+
   getPreviousPage(): void {
     this.page -= 1;
+    this.getPage();
+  }
+
+  getPage(): void {
     if (this.searchName && this.searchName.length > 0) {
       this.searchBeersByName();
     } else if (this.selectedCode) {
