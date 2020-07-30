@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../../../services/api.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {BeerDetails} from '../../../models/beerDetails';
 
 @Component({
@@ -14,7 +14,6 @@ export class BeerDetailsComponent implements OnInit {
   loadingInProgress = true;
 
   constructor(private apiService: ApiService,
-              private router: Router,
               public route: ActivatedRoute) {
     // get id parameter
     this.beerId = this.route.snapshot.paramMap.get('beerId');

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '../../../../services/api.service';
 
 @Component({
@@ -20,10 +20,9 @@ export class BreweryDetailsComponent implements OnInit {
   loadingInProgress = true;
 
   constructor(private apiService: ApiService,
-              private router: Router,
               public route: ActivatedRoute) {
-
-    this.breweryId = this.route.snapshot.paramMap.get('breweryId'); // get id parameter
+    // get id parameter
+    this.breweryId = this.route.snapshot.paramMap.get('breweryId');
   }
 
   ngOnInit(): void {
@@ -70,7 +69,6 @@ export class BreweryDetailsComponent implements OnInit {
         this.beersTypes.push(beer.style.name);
       });
     this.uniqueBeersTypes = [...new Set(this.beersTypes)];
-    console.log('Unique beers', this.uniqueBeersTypes);
   }
 
   searchBeersByType(): void {

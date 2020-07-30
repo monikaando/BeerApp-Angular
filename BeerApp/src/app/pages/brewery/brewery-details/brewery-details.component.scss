@@ -117,10 +117,10 @@ margin-bottom:5%;
     outline: 0;
     box-shadow: none;
     border: 0 !important;
-    background: #4b3535;
-    background-image: none;
+    background: #4b3535 none;
     padding: 0 0 0 1em;
     color: #ffffff;
+    width:400px;
   }
 
   /* Remove IE arrow */
@@ -138,11 +138,14 @@ margin-bottom:5%;
     overflow: hidden;
     border-radius: .25em;
     margin: 3%;
+    width:400px;
     label {
       font-size: .9em;
       line-height: 2.1;
       padding-left: 10px;
       color: #ffffff;
+      white-space: nowrap;
+
     }
     option {
       color:#ffffff;
